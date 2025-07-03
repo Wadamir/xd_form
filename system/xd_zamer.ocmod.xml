@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+	<code>xd_zamer123</code>
+    <name>XD_Zamer for Opencart 2.3</name>
+    <version>1.2.3</version>
+    <author>Domus159@gmail.com</author>
+    <link>https://xdomus.ru/opencart/obratnyj-zvonok-dlya-opencart-2-besplatno/</link>
+    <file path="catalog/controller/common/header.php">
+        <operation>
+            <search>
+				<![CDATA[
+					$data['telephone'] = $this->config->get('config_telephone');
+				]]>
+			</search>
+            <add position="after">
+				<![CDATA[
+					$data['xd_zamer_status'] = $this->config->get('xd_zamer_status');
+					$data['xd_zamer_validation_type'] = $this->config->get('xd_zamer_validation_type');
+					$current_language_id = $this->config->get('config_language_id');
+                    $data['xd_zamer_show_btn'] = $this->config->get('xd_zamer_show_btn');
+					$data['xd_zamer_button_name'] = $this->config->get('xd_zamer_button_name_'.$current_language_id);
+					if ($data['xd_zamer_button_name'] == '') {
+						$data['xd_zamer_button_name'] = $this->language->get('xd_zamer_button_name');
+					}
+				]]>
+			</add>
+        </operation>
+    </file>
+    <file path="catalog/view/theme/*/template/common/header.tpl">
+        <operation>
+            <search>
+				<![CDATA[
+					</head>
+				]]>
+			</search>
+            <add position="before"><![CDATA[
+				<?php if ($xd_zamer_status) { ?>
+					<script src="catalog/view/javascript/xd_zamer.js" type="text/javascript"></script>
+					<script src="catalog/view/javascript/sourcebuster.min.js" type="text/javascript"></script>
+					<link href="catalog/view/theme/default/stylesheet/xd_zamer.css" rel="stylesheet">
+					<?php if ($xd_zamer_status && $xd_zamer_validation_type != 0) { ?>
+						<script src="catalog/view/javascript/jquery.mask.min.js" type="text/javascript"></script>
+						<script>
+							$(document).ready(function(){
+								$('#xd_zamer_phone').mask('<?php echo $xd_zamer_validation_type; ?>');
+							});
+						</script>
+					<?php } ?>
+				<?php } ?>
+            ]]></add>
+        </operation>
+        <operation>
+            <search>
+				<![CDATA[
+					<body class="<?php echo $class; ?>">
+				]]>
+			</search>
+            <add position="after"><![CDATA[
+				<?php if ($xd_zamer_status && $xd_zamer_show_btn) { ?>
+						<a href="javascript:void(0)" id="xd_zamer_phone_button" class="btn btn-link xd_zamer_btn">
+							<div class="circlephone" style="transform-origin: center;"></div>
+							<div class="circle-fill" style="transform-origin: center;"></div>
+							<div class="img-circle" style="transform-origin: center;">
+								<div class="img-circleblock" style="transform-origin: center;"><p style="margin:0;"><?php echo $xd_zamer_button_name; ?></p></div>
+							</div>
+						</a>
+				<?php } ?>
+            ]]></add>
+        </operation>
+    </file>
+    <file path="catalog/controller/common/footer.php">
+        <operation>
+            <search>
+				<![CDATA[
+					$this->load->language('common/footer');
+				]]>
+			</search>
+            <add position="before"><![CDATA[
+                    $this->load->model('setting/setting');
+                    $data['xd_zamer_status'] = $this->config->get('xd_zamer_status');
+                    $current_language_id = $this->config->get('config_language_id');
+                    $data['xd_zamer_success_field'] = $this->config->get('xd_zamer_success_field_' . $current_language_id);
+            ]]></add>
+        </operation>
+    </file>
+    <file path="catalog/view/theme/*/template/common/footer.tpl">
+        <operation>
+            <search>
+				<![CDATA[
+					</body>
+				]]>
+			</search>
+            <add position="before"><![CDATA[
+				<?php if ($xd_zamer_status) { ?>
+					<div id="xd_zamer_success" class="modal fade">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-body">
+									<div class="text-center"><?php echo $xd_zamer_success_field; ?></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="xd_zamer_modal" class="modal fade"></div>
+				<?php } ?>
+            ]]></add>
+		</operation>
+    </file>
+</modification>
