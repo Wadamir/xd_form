@@ -1,115 +1,149 @@
 <?php
-class ControllerExtensionModuleXDForm extends Controller
+class ControllerModuleXDCallback extends Controller
 {
     private $error = array();
 
-    function __construct($registry)
+    private $field1_status = null;
+    private $field2_status = null;
+    private $field3_status = null;
+    private $captcha = null;
+    private $spam_protection = null;
+    private $exan_status = null;
+
+    public function index()
     {
-        parent::__construct($registry);
-        $this->load->language('extension/module/xd_form');
-        $this->load->model('setting/setting');
+        $data = [];
+        $xd_callback_setting = $this->config->get('xd_callback');
+        $data['status'] = false;
+        if ($xd_callback_setting) {
+            $data['status'] = boolval($xd_callback_setting['module_xd_callback_status']);
+            if ($data['status']) {
+                // Get language data
+                $this->load->language('module/xd_callback');
+                $data['modal_title'] = $this->language->get('modal_title');
+                $data['required_text'] = $this->language->get('required_text');
+                $data['error_required'] = $this->language->get('error_required');
+                $data['error_sending'] = $this->language->get('error_sending');
+                $data['submit_button'] = $this->language->get('submit_button');
 
-        $this->xd_form_status = $this->config->get('xd_form_status');
+                $current_language_id = $this->config->get('config_language_id');
+                $data['button_name'] = $xd_callback_setting['button_name'][$current_language_id];
+                if ($data['button_name'] == '') {
+                    $data['button_name'] = $this->language->get('button_name');
+                }
+                $data['success_field'] = html_entity_decode($xd_callback_setting['success_field'][$current_language_id], ENT_QUOTES, 'UTF-8');
+                if ($data['success_field'] == '') {
+                    $data['success_field'] = $this->language->get('success_field');
+                }
 
-        $this->xd_form_field1_status = $this->config->get('xd_form_field1_status');
-        $this->xd_form_field1_required = $this->config->get('xd_form_field1_required');
-        $this->xd_form_field2_status = $this->config->get('xd_form_field2_status');
-        $this->xd_form_field2_required = $this->config->get('xd_form_field2_required');
-        $this->xd_form_field3_status = $this->config->get('xd_form_field3_status');
-        $this->xd_form_field3_required = $this->config->get('xd_form_field3_required');
-        $this->xd_form_validation_status = $this->config->get('xd_form_validation_status');
-        $this->xd_form_validation_type = $this->config->get('xd_form_validation_type');
-        $this->xd_form_agree_status = $this->config->get('xd_form_agree_status');
+                // Fields
+                $data['field1_status'] = intval($xd_callback_setting['field1_status']); // Name status
+                $this->field1_status = $data['field1_status'];
+                $data['field1_title'] = $this->language->get('field1_title'); // Name title
+                $data['field2_status'] = intval($xd_callback_setting['field2_status']); // Phone status
+                $this->field2_status = $data['field2_status'];
+                $data['field2_title'] = $this->language->get('field2_title'); // Phone title
+                $data['field3_status'] = intval($xd_callback_setting['field3_status']); // Message status
+                $this->field3_status = $data['field3_status'];
+                $data['field3_title'] = $this->language->get('field3_title'); // Message title
 
-        if ($this->config->get('xd_form_captcha')) {
-            $this->xd_form_captcha = $this->load->controller('extension/captcha/' . $this->config->get('xd_form_captcha'));
-        } else {
-            $this->xd_form_captcha = '';
+                // Custom field
+                $data['field_custom_type'] = (isset($xd_callback_setting['field_custom_type'])) ? $xd_callback_setting['field_custom_type'] : '';
+                $data['field_custom_status'] = (isset($xd_callback_setting['field_custom_status'])) ? intval($xd_callback_setting['field_custom_status']) : 0;
+                $data['field_custom_title'] = (isset($xd_callback_setting['field_custom_title'][$current_language_id])) ? $xd_callback_setting['field_custom_title'][$current_language_id] : '';
+
+                // Captcha
+                $data['captcha'] = $xd_callback_setting['captcha']; // Captcha
+                $this->captcha = $data['captcha'];
+                $data['captcha_class'] = $xd_callback_setting['captcha'];
+                if ($this->config->get($data['captcha'] . '_status')) {
+                    $data['captcha'] = $this->load->controller('captcha/' . $data['captcha'], $this->error);
+                }
+
+                // Agreement
+                $data['agree_status'] = intval($xd_callback_setting['agree_status']);
+                if ($data['agree_status'] !== 0) {
+                    $this->load->model('catalog/information');
+                    $information_info = $this->model_catalog_information->getInformation($data['agree_status']);
+                    if ($information_info) {
+                        $data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->link('information/information', 'information_id=' . $data['agree_status'], 'SSL'), $information_info['title']);
+                    } else {
+                        $data['text_agree'] = '';
+                    }
+                }
+
+                $data['spam_protection'] = boolval($xd_callback_setting['spam_protection']);
+                $this->spam_protection = $data['spam_protection'];
+                $data['validation_type'] = $xd_callback_setting['validation_type'];
+
+                // Success
+                $data['success_type'] = (isset($xd_callback_setting['success_type'])) ? $xd_callback_setting['success_type'] : 0;
+                $data['success_utm'] = (isset($xd_callback_setting['success_utm'])) ? 'utm_source=' . trim($xd_callback_setting['success_utm']) : 'utm_source=xd_callback';
+
+                // Styles
+                $data['button_color'] = (isset($xd_callback_setting['button_color'])) ? $xd_callback_setting['button_color'] : '';
+                $data['button_position'] = (isset($xd_callback_setting['button_position'])) ? $xd_callback_setting['button_position'] : 'bottom_left';
+                $data['modal_style'] = (isset($xd_callback_setting['modal_style'])) ? $xd_callback_setting['modal_style'] : 'default';
+
+                // SourceBuster Analytics
+                $data['exan_status'] = (isset($xd_callback_setting['exan_status'])) ? boolval($xd_callback_setting['exan_status']) : false;
+                $this->exan_status = $data['exan_status'];
+                // Google Analytics
+                $data['google_status']              = (isset($xd_callback_setting['google_status'])) ? boolval($xd_callback_setting['google_status']) : false;
+                $data['google_category_btn']        = (isset($xd_callback_setting['google_category_btn'])) ? trim($xd_callback_setting['google_category_btn']) : '';
+                $data['google_action_btn']          = (isset($xd_callback_setting['google_action_btn'])) ? trim($xd_callback_setting['google_action_btn']) : '';
+                $data['google_category_send']       = (isset($xd_callback_setting['google_category_send'])) ? trim($xd_callback_setting['google_category_send']) : '';
+                $data['google_action_send']         = (isset($xd_callback_setting['google_action_send'])) ? trim($xd_callback_setting['google_action_send']) : '';
+                $data['google_category_success']    = (isset($xd_callback_setting['google_category_success'])) ? trim($xd_callback_setting['google_category_success']) : '';
+                $data['google_action_success']      = (isset($xd_callback_setting['google_action_success'])) ? trim($xd_callback_setting['google_action_success']) : '';
+                // Yandex Metrika
+                $data['ya_status']                  = (isset($xd_callback_setting['ya_status'])) ? boolval($xd_callback_setting['ya_status']) : false;
+                $data['ya_counter']                 = (isset($xd_callback_setting['ya_counter'])) ? trim($xd_callback_setting['ya_counter']) : '';
+                $data['ya_identifier']              = (isset($xd_callback_setting['ya_identifier'])) ? trim($xd_callback_setting['ya_identifier']) : '';
+                $data['ya_identifier_send']         = (isset($xd_callback_setting['ya_identifier_send'])) ? trim($xd_callback_setting['ya_identifier_send']) : '';
+                $data['ya_identifier_success']      = (isset($xd_callback_setting['ya_identifier_success'])) ? trim($xd_callback_setting['ya_identifier_success']) : '';
+            }
         }
-    }
-
-    public function info()
-    {
-        $this->load->model('setting/setting');
-        $data['xd_form_status'] = $this->xd_form_status;
-        $current_language_id = $this->config->get('config_language_id');
-        $data['xd_form_success_field'] = $this->config->get('xd_form_success_field_' . $current_language_id);
-
-        $data['xd_form_field1_status'] = $this->xd_form_field1_status;
-        $data['xd_form_field1_required'] = $this->xd_form_field1_required;
-        $data['xd_form_field2_status'] = $this->xd_form_field2_status;
-        $data['xd_form_field2_required'] = $this->xd_form_field2_required;
-        $data['xd_form_field3_status'] = $this->xd_form_field3_status;
-        $data['xd_form_field3_required'] = $this->xd_form_field3_required;
-        $data['xd_form_validation_status'] = $this->xd_form_validation_status;
-        $data['xd_form_validation_type'] = $this->xd_form_validation_type;
-        $data['xd_form_agree_status'] = $this->xd_form_agree_status;
-
-        $this->load->language('extension/module/xd_form');
-        $data['xd_form_modal_title'] = $this->language->get('xd_form_modal_title');
-        $data['xd_form_submit_button'] = $this->language->get('xd_form_submit_button');
-
-        if ($data['xd_form_success_field'] == '') {
-            $data['xd_form_success_field'] = htmlspecialchars_decode($this->language->get('xd_form_success_field'));
-        } else {
-            $data['xd_form_success_field'] = htmlspecialchars_decode($data['xd_form_success_field']);
-        }
-
-        $data['xd_form_field1_title'] = $this->language->get('xd_form_field1_title');
-        $data['xd_form_field2_title'] = $this->language->get('xd_form_field2_title');
-        $data['xd_form_field3_title'] = $this->language->get('xd_form_field3_title');
-        $data['xd_form_required_text'] = $this->language->get('xd_form_required_text');
-        $data['xd_form_error_required'] = $this->language->get('xd_form_error_required');
-        $data['xd_form_error_sending'] = $this->language->get('xd_form_error_sending');
-
-        // $data['xd_form_agree_status'] = $this->config->get('xd_form_agree_status');
-
-        // Captcha
-        $data['captcha'] = $this->xd_form_captcha;
-
-        $this->load->model('catalog/information');
-        $information_info = $this->model_catalog_information->getInformation($this->xd_form_agree_status);
-        if ($information_info) {
-            $data['xd_form_text_agree'] = sprintf($this->language->get('xd_form_text_agree'), $this->url->link('information/information/agree', 'information_id=' . $this->config->get('xd_form_agree_status'), 'SSL'), $information_info['title'], $information_info['title']);
-        } else {
-            $data['xd_form_text_agree'] = '';
-        }
-        $json['success'] = $this->load->view('extension/module/xd_form', $data);
-
-        $this->response->addHeader('Content-Type: application/json');
-        $this->response->setOutput(json_encode($json));
+        return $this->load->view('default/template/module/xd_callback.tpl', $data);
     }
 
     public function submit()
     {
-        if (!$this->validate()) {
-            $json['error'] = $this->error;
-            $this->response->addHeader('Content-Type: application/json');
-            $this->response->setOutput(json_encode($json));
-            return;
-        }
+        if ($this->request->server['REQUEST_METHOD'] == 'POST' && $this->validate()) {
 
-        if ($this->request->server['REQUEST_METHOD'] == 'POST') {
-
-            $this->load->language('extension/module/xd_form');
+            $xd_callback_setting = $this->config->get('xd_callback');
+            $this->load->language('module/xd_callback');
             $json = array();
             $mail_text = '';
 
-            if (isset($this->request->post['xd_form_name'])) {
-                $xd_form_name = $this->request->post['xd_form_name'];
-                $mail_text .= $this->language->get('text_name') . $xd_form_name . " \r\n";
+            $json['data'] = $this->request->post;
+
+            if (isset($this->request->post['xd_callback_name'])) {
+                $xd_callback_name = $this->request->post['xd_callback_name'];
+                $mail_text .= $this->language->get('text_name') . $xd_callback_name . " \r\n";
             }
 
-            if (isset($this->request->post['xd_form_phone'])) {
-                $xd_form_phone = $this->request->post['xd_form_phone'];
-                $mail_text .= $this->language->get('text_phone') . $xd_form_phone . " \r\n";
+            if (isset($this->request->post['xd_callback_phone'])) {
+                $xd_callback_phone = $this->request->post['xd_callback_phone'];
+                $mail_text .= $this->language->get('text_phone') . $xd_callback_phone . " \r\n";
             }
 
-            if (isset($this->request->post['xd_form_message'])) {
-                $xd_form_message = $this->request->post['xd_form_message'];
-                $mail_text .= $this->language->get('text_message') . $xd_form_message . " \r\n";
+            if (isset($this->request->post['xd_callback_message'])) {
+                $xd_callback_message = $this->request->post['xd_callback_message'];
+                $mail_text .= $this->language->get('text_message') . $xd_callback_message . " \r\n";
             }
 
+            if (isset($this->request->post['xd_callback_custom'])) {
+                $xd_callback_custom = $this->request->post['xd_callback_custom'];
+                $current_language_id = $this->config->get('config_language_id');
+                $xd_callback_custom_title = $this->config->get('xd_callback')['field_custom_title'][$current_language_id];
+                $mail_text .= $xd_callback_custom_title . ': ' . $xd_callback_custom . " \r\n";
+            }
+
+            $mail_text .= " \r\n";
+
+            // Private data
+            $mail_text .= " \r\n" . $this->language->get('xd_callback_sb_private_title') . " \r\n";
             if (!empty($this->request->server['REMOTE_ADDR'])) {
                 $ip = $this->request->server['REMOTE_ADDR'];
                 $mail_text .= $this->language->get('text_ip') . $ip . " \r\n";
@@ -128,8 +162,110 @@ class ControllerExtensionModuleXDForm extends Controller
                 $mail_text .= $this->language->get('text_user_agent') . $user_agent . " \r\n";
             }
 
-            $from_email = 'xd_form@' . $_SERVER['SERVER_NAME'];
-            $sender_name = $this->language->get('text_sender_name');
+            if (isset($this->request->post['xd_callback_sb_udata_vst']) && $this->request->post['xd_callback_sb_udata_vst'] != '') {
+                $xd_callback_sb_udata_vst = $this->request->post['xd_callback_sb_udata_vst'];
+                $mail_text .= $this->language->get('xd_callback_sb_udata_vst') . $xd_callback_sb_udata_vst . " \r\n";
+            }
+            if (isset($this->request->post['xd_callback_sb_promo_code']) && $this->request->post['xd_callback_sb_promo_code'] != '' && $this->request->post['xd_callback_sb_promo_code'] != 'undefined') {
+                $xd_callback_sb_promo_code = $this->request->post['xd_callback_sb_promo_code'];
+                $mail_text .= $this->language->get('xd_callback_sb_promo_code') . $xd_callback_sb_promo_code . " \r\n";
+            }
+            // Private data end
+
+            // Source first visit
+            $mail_text .= " \r\n" . $this->language->get('xd_callback_sb_first_visit_title') . " \r\n";
+            if (isset($this->request->post['xd_callback_sb_first_typ']) && $this->request->post['xd_callback_sb_first_typ'] != '') {
+                $xd_callback_sb_first_typ = $this->request->post['xd_callback_sb_first_typ'];
+                $mail_text .= $this->language->get('xd_callback_sb_first_typ') . $xd_callback_sb_first_typ . " \r\n";
+            }
+            if (isset($this->request->post['xd_callback_sb_first_src']) && $this->request->post['xd_callback_sb_first_src'] != '') {
+                $xd_callback_sb_first_src = $this->request->post['xd_callback_sb_first_src'];
+                $mail_text .= $this->language->get('xd_callback_sb_first_src') . $xd_callback_sb_first_src . " \r\n";
+            }
+            if (isset($this->request->post['xd_callback_sb_first_mdm']) && $this->request->post['xd_callback_sb_first_mdm'] != '') {
+                $xd_callback_sb_first_mdm = $this->request->post['xd_callback_sb_first_mdm'];
+                $mail_text .= $this->language->get('xd_callback_sb_first_mdm') . $xd_callback_sb_first_mdm . " \r\n";
+            }
+            if (isset($this->request->post['xd_callback_sb_first_cmp']) && $this->request->post['xd_callback_sb_first_cmp'] != '') {
+                $xd_callback_sb_first_cmp = $this->request->post['xd_callback_sb_first_cmp'];
+                $mail_text .= $this->language->get('xd_callback_sb_first_cmp') . $xd_callback_sb_first_cmp . " \r\n";
+            }
+            if (isset($this->request->post['xd_callback_sb_first_cnt']) && $this->request->post['xd_callback_sb_first_cnt'] != '') {
+                $xd_callback_sb_first_cnt = $this->request->post['xd_callback_sb_first_cnt'];
+                $mail_text .= $this->language->get('xd_callback_sb_first_cnt') . $xd_callback_sb_first_cnt . " \r\n";
+            }
+            if (isset($this->request->post['xd_callback_sb_first_trm']) && $this->request->post['xd_callback_sb_first_trm'] != '') {
+                $xd_callback_sb_first_trm = $this->request->post['xd_callback_sb_first_trm'];
+                $mail_text .= $this->language->get('xd_callback_sb_first_trm') . $xd_callback_sb_first_trm . " \r\n";
+            }
+            if (isset($this->request->post['xd_callback_sb_first_add_fd']) && $this->request->post['xd_callback_sb_first_add_fd'] != '') {
+                $xd_callback_sb_first_add_fd = $this->request->post['xd_callback_sb_first_add_fd'];
+                $mail_text .= $this->language->get('xd_callback_sb_first_add_fd') . $xd_callback_sb_first_add_fd . " \r\n";
+            }
+            if (isset($this->request->post['xd_callback_sb_first_add_ep']) && $this->request->post['xd_callback_sb_first_add_ep'] != '') {
+                $xd_callback_sb_first_add_ep = $this->request->post['xd_callback_sb_first_add_ep'];
+                $mail_text .= $this->language->get('xd_callback_sb_first_add_ep') . $xd_callback_sb_first_add_ep . " \r\n";
+            }
+            if (isset($this->request->post['xd_callback_sb_first_add_rf']) && $this->request->post['xd_callback_sb_first_add_rf'] != '') {
+                $xd_callback_sb_first_add_rf = $this->request->post['xd_callback_sb_first_add_rf'];
+                $mail_text .= $this->language->get('xd_callback_sb_first_add_rf') . $xd_callback_sb_first_add_rf . " \r\n";
+            }
+            // Source first visit end
+
+            // Source current visit
+            $mail_text .= " \r\n" . $this->language->get('xd_callback_sb_current_visit_title') . " \r\n";
+            if (isset($this->request->post['xd_callback_sb_current_typ']) && $this->request->post['xd_callback_sb_current_typ'] != '') {
+                $xd_callback_sb_current_typ = $this->request->post['xd_callback_sb_current_typ'];
+                $mail_text .= $this->language->get('xd_callback_sb_current_typ') . $xd_callback_sb_current_typ . " \r\n";
+            }
+            if (isset($this->request->post['xd_callback_sb_current_src']) && $this->request->post['xd_callback_sb_current_src'] != '') {
+                $xd_callback_sb_current_src = $this->request->post['xd_callback_sb_current_src'];
+                $mail_text .= $this->language->get('xd_callback_sb_current_src') . $xd_callback_sb_current_src . " \r\n";
+            }
+            if (isset($this->request->post['xd_callback_sb_current_mdm']) && $this->request->post['xd_callback_sb_current_mdm'] != '') {
+                $xd_callback_sb_current_mdm = $this->request->post['xd_callback_sb_current_mdm'];
+                $mail_text .= $this->language->get('xd_callback_sb_current_mdm') . $xd_callback_sb_current_mdm . " \r\n";
+            }
+            if (isset($this->request->post['xd_callback_sb_current_cmp']) && $this->request->post['xd_callback_sb_current_cmp'] != '') {
+                $xd_callback_sb_current_cmp = $this->request->post['xd_callback_sb_current_cmp'];
+                $mail_text .= $this->language->get('xd_callback_sb_current_cmp') . $xd_callback_sb_current_cmp . " \r\n";
+            }
+            if (isset($this->request->post['xd_callback_sb_current_cnt']) && $this->request->post['xd_callback_sb_current_cnt'] != '') {
+                $xd_callback_sb_current_cnt = $this->request->post['xd_callback_sb_current_cnt'];
+                $mail_text .= $this->language->get('xd_callback_sb_current_cnt') . $xd_callback_sb_current_cnt . " \r\n";
+            }
+            if (isset($this->request->post['xd_callback_sb_current_trm']) && $this->request->post['xd_callback_sb_current_trm'] != '') {
+                $xd_callback_sb_current_trm = $this->request->post['xd_callback_sb_current_trm'];
+                $mail_text .= $this->language->get('xd_callback_sb_current_trm') . $xd_callback_sb_current_trm . " \r\n";
+            }
+            if (isset($this->request->post['xd_callback_sb_current_add_fd']) && $this->request->post['xd_callback_sb_current_add_fd'] != '') {
+                $xd_callback_sb_current_add_fd = $this->request->post['xd_callback_sb_current_add_fd'];
+                $mail_text .= $this->language->get('xd_callback_sb_current_add_fd') . $xd_callback_sb_current_add_fd . " \r\n";
+            }
+            if (isset($this->request->post['xd_callback_sb_current_add_ep']) && $this->request->post['xd_callback_sb_current_add_ep'] != '') {
+                $xd_callback_sb_current_add_ep = $this->request->post['xd_callback_sb_current_add_ep'];
+                $mail_text .= $this->language->get('xd_callback_sb_current_add_ep') . $xd_callback_sb_current_add_ep . " \r\n";
+            }
+            if (isset($this->request->post['xd_callback_sb_current_add_rf']) && $this->request->post['xd_callback_sb_current_add_rf'] != '') {
+                $xd_callback_sb_current_add_rf = $this->request->post['xd_callback_sb_current_add_rf'];
+                $mail_text .= $this->language->get('xd_callback_sb_current_add_rf') . $xd_callback_sb_current_add_rf . " \r\n";
+            }
+            // Source current visit end
+
+            // Current session
+            $mail_text .= " \r\n" . $this->language->get('xd_callback_sb_session_title') . " \r\n";
+            if (isset($this->request->post['xd_callback_sb_session_pgs']) && $this->request->post['xd_callback_sb_session_pgs'] != '') {
+                $xd_callback_sb_session_pgs = $this->request->post['xd_callback_sb_session_pgs'];
+                $mail_text .= $this->language->get('xd_callback_sb_session_pgs') . $xd_callback_sb_session_pgs . " \r\n";
+            }
+            if (isset($this->request->post['xd_callback_sb_session_cpg']) && $this->request->post['xd_callback_sb_session_cpg'] != '') {
+                $xd_callback_sb_session_cpg = $this->request->post['xd_callback_sb_session_cpg'];
+                $mail_text .= $this->language->get('xd_callback_sb_session_cpg') . $xd_callback_sb_session_cpg . " \r\n";
+            }
+            // Current session end
+
+            $from_email = 'xd_callback@' . $_SERVER['SERVER_NAME'];
+            $sender_name = $this->config->get('config_name');
             $mail_title = sprintf($this->language->get('text_mail_title'), $this->config->get('config_name'));
 
             $mail = new Mail();
@@ -149,25 +285,23 @@ class ControllerExtensionModuleXDForm extends Controller
             $mail->setText($mail_text);
             $mail_result = $mail->send();
 
-            $additional_emails = explode(',', $this->config->get('config_alert_email'));
-            $regexp = $this->config->get('config_mail_regexp') ? $this->config->get('config_mail_regexp') : '/^[^\@]+@.*.[a-z]{2,15}$/i';
-
-            foreach ($additional_emails as $email) {
-                if ($email && preg_match($regexp, $email)) {
-                    $mail->setTo($email);
-                    $mail->send();
-                }
-            }
-
             if (!$mail_result) {
                 $json['success'] = 'Success sending';
+                // Success
+                $data['success_type'] = (isset($xd_callback_setting['success_type'])) ? intval($xd_callback_setting['success_type']) : 0;
+                $data['success_utm'] = (isset($xd_callback_setting['success_utm']) && trim($xd_callback_setting['success_utm']) != '') ? 'utm_source=' . trim($xd_callback_setting['success_utm']) : '';
+                if ($data['success_type'] === 1 && $data['success_utm'] !== '') {
+                    $json['redirect'] = $this->url->link('checkout/success', 'utm_source=' . $data['success_utm'], 'SSL');
+                } elseif ($data['success_type'] === 1) {
+                    $json['redirect'] = $this->url->link('checkout/success', '', 'SSL');
+                }
             } else {
                 $json['error'] = 'Error sending';
             }
             $this->response->addHeader('Content-Type: application/json');
             $this->response->setOutput(json_encode($json));
         } else {
-            $json['error'] = 'Smth wrong... Error sending';
+            $json['error'] = $this->error;
             $this->response->addHeader('Content-Type: application/json');
             $this->response->setOutput(json_encode($json));
         }
@@ -175,42 +309,84 @@ class ControllerExtensionModuleXDForm extends Controller
 
     protected function validate()
     {
-        if ($this->xd_form_field1_status && $this->xd_form_field1_required) {
-            if ((utf8_strlen($this->request->post['xd_form_name']) < 1) || (utf8_strlen($this->request->post['xd_form_name']) > 32)) {
-                $this->error['xd_form_name'] = $this->language->get('error_name');
+        $xd_callback_setting = $this->config->get('xd_callback');
+        $this->load->language('module/xd_callback');
+
+        // Validate spam protection
+        $this->spam_protection = boolval($xd_callback_setting['spam_protection']);
+        if ($this->spam_protection && (strlen(trim($this->request->post['xd_callback_email'])) > 0 || strlen(trim($this->request->post['xd_callback_surname'])) > 0)) {
+            $this->error['message'] = $this->language->get('spam_protection');
+            $this->error['input'] = 'spam_protection';
+            return false;
+        }
+
+        // Validate name
+        $this->field1_status = intval($xd_callback_setting['field1_status']);
+        if ($this->field1_status === 2) {
+            if (strlen($this->request->post['xd_callback_name']) < 1 || strlen($this->request->post['xd_callback_name']) > 64) {
+                $this->error['message'] = $this->language->get('error_name');
+                $this->error['input'] = 'xd_callback_name';
+                return false;
             }
         }
 
-        if ($this->xd_form_field2_status && $this->xd_form_field2_required) {
-            if ((utf8_strlen($this->request->post['xd_form_phone']) < 10) || (utf8_strlen($this->request->post['xd_form_phone']) > 20)) {
-                $this->error['xd_form_phone'] = $this->language->get('error_phone');
+        // Validate phone number
+        $this->field2_status = intval($xd_callback_setting['field2_status']);
+        if ($this->field2_status === 2) {
+            $min_length = 9;
+            $max_length = 20;
+            $this->phone_validation_type = $xd_callback_setting['validation_type'];
+            if ($this->phone_validation_type) {
+                $min_length = utf8_strlen($this->phone_validation_type);
+                $max_length = utf8_strlen($this->phone_validation_type);
+            }
+            if ((utf8_strlen($this->request->post['xd_callback_phone']) < $min_length) || (utf8_strlen($this->request->post['xd_callback_phone']) > $max_length)) {
+                $this->error['message'] = $this->language->get('error_phone');
+                $this->error['input'] = 'xd_callback_phone';
+                return false;
+            }
+
+            $phone_number_validation_regex = "/^\\+?\\d{1,4}?[-.\\s]?\\(?\\d{1,3}?\\)?[-.\\s]?\\d{1,4}[-.\\s]?\\d{1,4}[-.\\s]?\\d{1,9}$/";
+            if (!preg_match($phone_number_validation_regex, $this->request->post['xd_callback_phone'])) {
+                $this->error['message'] = $this->language->get('error_phone');
+                $this->error['input'] = 'xd_callback_phone';
+                return false;
             }
         }
 
-        if ($this->xd_form_field3_status && $this->xd_form_field3_required) {
-            if ((utf8_strlen($this->request->post['xd_form_message']) < 1) || (utf8_strlen($this->request->post['xd_form_message']) > 3000)) {
-                $this->error['xd_form_message'] = $this->language->get('error_message');
+        // Validate message
+        $this->field3_status = intval($xd_callback_setting['field3_status']);
+        if ($this->field3_status === 2) {
+            if (strlen($this->request->post['xd_callback_message']) < 1 || strlen($this->request->post['xd_callback_message']) > 9000) {
+                $this->error['message'] = $this->language->get('error_message');
+                $this->error['input'] = 'xd_callback_message';
+                return false;
+            }
+        }
+
+        // Validate custom field
+        $this->field_custom_status = intval($xd_callback_setting['field_custom_status']);
+        if ($this->field_custom_status === 2) {
+            if (strlen($this->request->post['xd_callback_custom']) < 1 || strlen($this->request->post['xd_callback_custom']) > 9000) {
+                $current_language_id = $this->config->get('config_language_id');
+                $this->error['message'] = sprintf($this->language->get('error_custom'), $xd_callback_setting['field_custom_title'][$current_language_id]);
+                $this->error['input'] = 'xd_callback_custom';
+                return false;
             }
         }
 
         // Captcha
-        if ($this->config->get('xd_form_captcha')) {
-            $captcha = $this->load->controller('extension/captcha/' . $this->config->get('xd_form_captcha') . '/validate');
+        $data['captcha'] = (isset($xd_callback_setting['captcha'])) ? $xd_callback_setting['captcha'] : 0; // Captcha
+        $this->captcha = $data['captcha'];
+        if ($this->captcha && $this->config->get($this->captcha . '_status')) {
+            $captcha = $this->load->controller('captcha/' . $this->captcha . '/validate');
             if ($captcha) {
-                $this->error['captcha'] = $captcha;
+                $this->error['message'] = $this->language->get('error_captcha');
+                $this->error['input'] = 'xd_callback_captcha';
+                return false;
             }
         }
 
         return !$this->error;
-    }
-
-    function get_captcha()
-    {
-        // $this->load->language('extension/module/xd_form');
-        $xd_form_captcha = $this->load->controller('extension/captcha/' . $this->config->get('xd_form_captcha'));
-        $json = array();
-        $json['captcha'] = $xd_form_captcha;
-        $this->response->addHeader('Content-Type: application/json');
-        $this->response->setOutput(json_encode($json));
     }
 }
