@@ -1,11 +1,11 @@
-function callbackOpenInfo(e, link) {
+function formOpenInfo(e, link) {
     e.preventDefault();
     e.stopPropagation();
     window.open(link, '_blank');
     return false;
 }
 
-function callbackFormValidation(formElem) {
+function formFormValidation(formElem) {
     let elements = formElem.querySelectorAll('input.required');
     let telElements = formElem.querySelectorAll('input[type=tel]');
     let errorCounter = 0;
@@ -35,9 +35,9 @@ function callbackFormValidation(formElem) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-    console.log('xd_callback.js!');
-    let errorElem = document.getElementById('xd_callback_error');
-    document.querySelectorAll('#xd_callback-form input').forEach(input => {
+    console.log('xd_form.js!');
+    let errorElem = document.getElementById('xd_form_error');
+    document.querySelectorAll('#xd_form-form input').forEach(input => {
         input.addEventListener('focus', function () {
             this.parentElement.classList.remove('has-error');
             if (this.name === 'captcha') {
@@ -48,20 +48,20 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    document.getElementById('xd_callback-form').addEventListener('submit', function (event) {
+    document.getElementById('xd_form-form').addEventListener('submit', function (event) {
         event.preventDefault();
 
-        callbackClickAnalyticsSend?.();
+        formClickAnalyticsSend?.();
 
         let submitBtn = this.querySelector('button[type=submit]');
-        let errorElem = document.getElementById('xd_callback_error');
+        let errorElem = document.getElementById('xd_form_error');
 
         submitBtn.disabled = true;
         submitBtn.classList.add('disabled');
 
         let formData = new FormData(this);
 
-        fetch('index.php?route=module/xd_callback/submit', {
+        fetch('index.php?route=module/xd_form/submit', {
             method: 'POST',
             body: formData,
         })
@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         if (!input) {
                             return false;
                         }
-                        if (json.error.input === 'xd_callback_captcha') {
+                        if (json.error.input === 'xd_form_captcha') {
                             input.classList.add('has-error');
                         } else {
                             input.parentElement.classList.add('has-error');
@@ -95,17 +95,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (json.success) {
                     errorElem.textContent = '';
                     errorElem.classList.add('hidden');
-                    document.getElementById('xd_callback-form').reset();
-                    callbackClickAnalyticsSuccess?.();
+                    document.getElementById('xd_form-form').reset();
+                    formClickAnalyticsSuccess?.();
                     submitBtn.disabled = false;
                     if (json.redirect) {
                         window.location.href = json.redirect;
                     } else {
                         submitBtn.classList.remove('disabled');
-                        $('#xd_callback_modal').modal('hide');
-                        $('#xd_callback_success').modal('show');
+                        $('#xd_form_modal').modal('hide');
+                        $('#xd_form_success').modal('show');
                         setTimeout(() => {
-                            $('#xd_callback_success').modal('hide');
+                            $('#xd_form_success').modal('hide');
                         }, 5000);
                     }
                 }

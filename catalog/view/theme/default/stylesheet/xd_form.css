@@ -2,7 +2,7 @@
     display: none !important;
 }
 
-.button_wrapper #xd_callback_phone_button {
+.button_wrapper #xd_form_phone_button {
     position: fixed;
     z-index: 999;
 
@@ -10,28 +10,28 @@
     padding: 0;
 }
 
-.button_wrapper.bottom_right #xd_callback_phone_button {
+.button_wrapper.bottom_right #xd_form_phone_button {
     top: auto;
     bottom: 20px;
     left: auto;
     right: -15px;
 }
 
-.button_wrapper.bottom_left #xd_callback_phone_button {
+.button_wrapper.bottom_left #xd_form_phone_button {
     top: auto;
     bottom: 20px;
     left: 160px;
     right: auto;
 }
 
-.button_wrapper.top_right #xd_callback_phone_button {
+.button_wrapper.top_right #xd_form_phone_button {
     top: 120px;
     bottom: auto;
     left: auto;
     right: -15px;
 }
 
-.button_wrapper.top_left #xd_callback_phone_button {
+.button_wrapper.top_left #xd_form_phone_button {
     top: 120px;
     bottom: auto;
     left: 160px;
@@ -340,44 +340,44 @@
 
 
 /* Modal styles */
-#xd_callback_modal .m-0 {
+#xd_form_modal .m-0 {
     margin: 0;
 }
 
-#xd_callback_modal .p-0 {
+#xd_form_modal .p-0 {
     padding: 0;
 }
 
-#xd_callback_modal .pt-1 {
+#xd_form_modal .pt-1 {
     padding-top: 1em;
 }
 
-#xd_callback_modal .pb-1 {
+#xd_form_modal .pb-1 {
     padding-bottom: 1em;
 }
 
-#xd_callback_modal .py-1 {
+#xd_form_modal .py-1 {
     padding-top: 1em;
     padding-bottom: 1em;
 }
 
-#xd_callback_modal .px-1 {
+#xd_form_modal .px-1 {
     padding-left: 1em;
     padding-right: 1em;
 }
 
-#xd_callback_modal .text-description {
+#xd_form_modal .text-description {
     font-size: 1.25em;
     line-height: 1.25em;
 }
 
-#xd_callback_error {
+#xd_form_error {
     font-size: 1.25em;
     font-style: italic;
     line-height: 1.5em;
 }
 
-#xd_callback_modal .modal-title {
+#xd_form_modal .modal-title {
     line-height: 1;
 }
 
@@ -395,8 +395,8 @@
     padding: 0px 24px 24px 24px;
 }
 
-#xd_callback_success.modal.modal-custom .modal-dialog .modal-content .modal-body,
-#xd_callback_success.modal.modal-custom .modal-dialog .modal-content .modal-footer {
+#xd_form_success.modal.modal-custom .modal-dialog .modal-content .modal-body,
+#xd_form_success.modal.modal-custom .modal-dialog .modal-content .modal-footer {
     padding-top: 0;
 }
 
@@ -458,24 +458,24 @@
 }
 
 /****** Captcha ******/
-#xd_callback_modal .captcha.basic_captcha>.form-group {
+#xd_form_modal .captcha.basic_captcha>.form-group {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
 }
 
-#xd_callback_modal .captcha.basic_captcha>.form-group>label {
+#xd_form_modal .captcha.basic_captcha>.form-group>label {
     width: 100%;
 }
 
-#xd_callback_modal .captcha.basic_captcha>.form-group>input {
+#xd_form_modal .captcha.basic_captcha>.form-group>input {
     order: 3;
 
     width: calc(100% - 150px);
     height: 35px;
 }
 
-#xd_callback_modal .captcha.basic_captcha>.form-group>img {
+#xd_form_modal .captcha.basic_captcha>.form-group>img {
     order: 2;
 
     border-top-left-radius: 8px;

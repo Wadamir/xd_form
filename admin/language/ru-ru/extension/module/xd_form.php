@@ -1,12 +1,12 @@
 <?php
 // Heading
-$_['heading_name']          = 'XD Callback';
-$_['heading_title']         = '<span style="font-weight:800; color:#0066cc; text-align:left; font-size:1.5em">XD</span>&nbsp;&nbsp;<i class="fa fa-bolt" style="color:#990000; text-align:left; font-size:1.5em" aria-hidden="true"></i>&nbsp;&nbsp;<span style="font-weight:800; text-align:left; font-size:1.5em"><span style="color:#003366;">Callback</span></span>';
+$_['heading_name']          = 'XD Form';
+$_['heading_title']         = '<span style="font-weight:800; color:#0066cc; text-align:left; font-size:1.5em">XD</span>&nbsp;&nbsp;<i class="fa fa-bolt" style="color:#990000; text-align:left; font-size:1.5em" aria-hidden="true"></i>&nbsp;&nbsp;<span style="font-weight:800; text-align:left; font-size:1.5em"><span style="color:#003366;">Form</span></span>';
 
 // Text
 $_['text_module']           = 'Модули';
-$_['text_success']          = 'Отлично! Вы изменили модуль XD Callback!';
-$_['text_edit']             = 'Редактировать модуль XD Callback';
+$_['text_success']          = 'Отлично! Вы изменили модуль XD Form!';
+$_['text_edit']             = 'Редактировать модуль XD Form';
 $_['text_enabled']          = 'Включено';
 $_['text_disabled']         = 'Отключено';
 
@@ -49,7 +49,7 @@ $_['entry_spam_protection']        = 'Дополнительная защита 
 
 // Entry
 $_['entry_button_name']             = 'Текст на кнопке (не виден на стандартной кнопке)';
-$_['entry_status']                  = 'Статус модуля XD Callback';
+$_['entry_status']                  = 'Статус модуля XD Form';
 $_['entry_success_field']           = 'Текст успешной отправки во всплывающем окне';
 $_['success_field_tooltip']         = 'Допустимо использовать html-теги';
 
@@ -105,7 +105,7 @@ $_['google_target_status_title']    = 'Включить Google цель';
 // Help Tab
 $_['text_tab_help']                 = 'Помощь';
 $_['text_tab_help_title']           = 'Нужна помощь?';
-$_['text_help']                     = '<p><a href="//xdomus.ru/opencart/xd_callback-opencart-free/" target="_blank">Описание модуля</a></p><p><a href="//xdomus.ru/opencart/ocmod-instruktsiya-dlya-razrabotchika/" target="_blank">OCMOD - инструкция для разработчика</a></p><p><a href="//xdomus.ru/support/" target="_blank">Отправить запрос на установку модуля</a></p>';
+$_['text_help']                     = '<p><a href="//xdomus.ru/opencart/xd_form-opencart-free/" target="_blank">Описание модуля</a></p><p><a href="//xdomus.ru/opencart/ocmod-instruktsiya-dlya-razrabotchika/" target="_blank">OCMOD - инструкция для разработчика</a></p><p><a href="//xdomus.ru/support/" target="_blank">Отправить запрос на установку модуля</a></p>';
 
 // Error
-$_['error_permission']     = 'Warning: You do not have permission to modify XD Callback module!';
+$_['error_permission']     = 'Warning: You do not have permission to modify XD Form module!';
