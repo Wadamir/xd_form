@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
-    console.log('XD Zvonok DOM loaded');
+    console.log('XD Form DOM loaded');
     
-    btnZvonokEvents();
+    btnFormEvents();
 
     // getCaptcha();
 });
@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
 const getCaptcha = () => {
     const xd_captcha = document.getElementById('xd_captcha');
     if (!xd_captcha) return;
-    const captcha_url = 'index.php?route=extension/module/xd_zamer/get_captcha';
+    const captcha_url = 'index.php?route=extension/module/xd_form/get_captcha';
     fetch(captcha_url, {
         method: 'GET',
         headers: {
@@ -25,12 +25,12 @@ const getCaptcha = () => {
         }
     });
 }
-const btnZvonokEvents = () => {
-    const buttons = document.getElementsByClassName('xd_zamer_btn');
+const btnFormEvents = () => {
+    const buttons = document.getElementsByClassName('xd_form_btn');
     for (let i = 0; i < buttons.length; i++) {
         buttons[i].addEventListener('click', () => {
-            const modal = $('#xd_zamer_modal');
-            const info_url = 'index.php?route=extension/module/xd_zamer/info';
+            const modal = $('#xd_form_modal');
+            const info_url = 'index.php?route=extension/module/xd_form/info';
             fetch(info_url, {
                 method: 'GET',
                 headers: {
@@ -57,7 +57,7 @@ const btnZvonokEvents = () => {
     }
 }
 const formEvents = () => {
-    const form = document.getElementById('xd_zamer_form');
+    const form = document.getElementById('xd_form_form');
     if (!form) return;
     form.addEventListener('submit', (e) => {
         submitForm();
@@ -65,7 +65,7 @@ const formEvents = () => {
     });
 }
 const inputEvents = () => {
-    const inputs = document.getElementsByClassName('xd_zamer_input');
+    const inputs = document.getElementsByClassName('xd_form_input');
     for (let i = 0; i < inputs.length; i++) {
         inputs[i].addEventListener('focus', () => {
             let input = inputs[i];
@@ -75,7 +75,7 @@ const inputEvents = () => {
     }
 }
 const phoneEvents = () => {
-    const phoneInputs = document.getElementById('xd_zamer_phone');
+    const phoneInputs = document.getElementById('xd_form_phone');
     if (!phoneInputs) return;
 
     phoneInputs.addEventListener('keyup', (e) => {
@@ -92,9 +92,9 @@ const phoneEvents = () => {
 
 }
 const submitForm = () => {
-    console.log('XD Zvonok submit form');
+    console.log('XD Form submit form');
 
-    const form = document.getElementById('xd_zamer_form');
+    const form = document.getElementById('xd_form_form');
     if (!form) return;
 
     const submit_btn = form.querySelector('button[type=submit]');
@@ -106,7 +106,7 @@ const submitForm = () => {
     submit_btn.classList.add('disabled');
     submit_btn.innerText = waiting_text;
 
-    const url = 'index.php?route=extension/module/xd_zamer/submit';
+    const url = 'index.php?route=extension/module/xd_form/submit';
     const data = new FormData(form);
     try {
         fetch(url, {
@@ -155,13 +155,13 @@ const submitForm = () => {
                 submit_btn.classList.remove('disabled');
                 submit_btn.innerText = value_text;
                 submit_btn.disabled = false;
-                $('#xd_zamer_modal').modal('hide');
-                $('#xd_zamer_modal').on('hidden.bs.modal', () => {
+                $('#xd_form_modal').modal('hide');
+                $('#xd_form_modal').on('hidden.bs.modal', () => {
                     if (success) {
-                        $('#xd_zamer_success').modal('show');
+                        $('#xd_form_success').modal('show');
                         setTimeout(() => {
                             console.log('success sending!');
-                            $('#xd_zamer_success').modal('hide');
+                            $('#xd_form_success').modal('hide');
                         }, 4000);
                         success = false;
                     }
@@ -180,7 +180,7 @@ const submitForm = () => {
 }
 /*
 window.onload = function() {
-    $('#xd_zamer-form').submit(function(event) {
+    $('#xd_form-form').submit(function(event) {
 		event.preventDefault ? event.preventDefault() : (event.returnValue = false);
 		if(!formValidation(event.target)){return false;}
 		var sendingForm = $(this);
@@ -188,9 +188,9 @@ window.onload = function() {
 		var value_text = $(submit_btn).text();
 		var waiting_text = 'SENDING';
 		$.ajax({
-			url: 'index.php?route=extension/module/xd_zamer/submit',
+			url: 'index.php?route=extension/module/xd_form/submit',
 			type: 'post',
-			data: $('#xd_zamer-form input[type=\'hidden\'], #xd_zamer-form input[type=\'text\'], #xd_zamer-form input[type=\'tel\'], #xd_zamer-form input[type=\'email\'], #xd_zamer-form textarea'),
+			data: $('#xd_form-form input[type=\'hidden\'], #xd_form-form input[type=\'text\'], #xd_form-form input[type=\'tel\'], #xd_form-form input[type=\'email\'], #xd_form-form textarea'),
 			dataType: 'json',
 			beforeSend: function() {
 				$(submit_btn).prop( 'disabled', true );
@@ -215,13 +215,13 @@ window.onload = function() {
 					$(submit_btn).removeClass('waiting');
 					$(submit_btn).text(value_text);
 					$(submit_btn).prop( 'disabled', false );
-					$('#xd_zamer_modal').modal('hide');
-					$('#xd_zamer_modal').on('hidden.bs.modal', function (e) {
+					$('#xd_form_modal').modal('hide');
+					$('#xd_form_modal').on('hidden.bs.modal', function (e) {
 						if (success) {
-							$('#xd_zamer_success').modal('show');
+							$('#xd_form_success').modal('show');
 							setTimeout(function(){
 									console.log('success sending!');
-									$('#xd_zamer_success').modal('hide');
+									$('#xd_form_success').modal('hide');
 							}, 4000);
 							success = false;
 						}

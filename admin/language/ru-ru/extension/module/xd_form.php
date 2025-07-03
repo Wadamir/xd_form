@@ -1,13 +1,13 @@
 <?php
 // Heading
-$_['heading_name']                  = 'XD Zvonok';
-$_['heading_title']                 = '<span style="font-weight:800; color:#0066cc; text-align:left; font-size:1.25em">XD</span>&nbsp;&nbsp;<i class="fa fa-bolt" style="color:#990000; text-align:left; font-size:1.25em" aria-hidden="true"></i>&nbsp;&nbsp;<span style="font-weight:800; text-align:left; font-size:1.25em"><span style="color:#003366;">Zvonok</span></span> v.1.2.3';
+$_['heading_name']                  = 'XD Form';
+$_['heading_title']                 = '<span style="font-weight:800; color:#0066cc; text-align:left; font-size:1.25em">XD</span>&nbsp;&nbsp;<i class="fa fa-bolt" style="color:#990000; text-align:left; font-size:1.25em" aria-hidden="true"></i>&nbsp;&nbsp;<span style="font-weight:800; text-align:left; font-size:1.25em"><span style="color:#003366;">Form</span></span> v.1.2.3';
 
 // Text
 $_['text_module']                   = 'Модули';
 $_['text_extension']                = 'Дополнения';
-$_['text_success']                  = 'Отлично! Вы изменили модуль XD Zvonok!';
-$_['text_edit']                     = 'Редактировать модуль XD Zvonok';
+$_['text_success']                  = 'Отлично! Вы изменили модуль XD Form!';
+$_['text_edit']                     = 'Редактировать модуль XD Form';
 $_['text_enabled']                  = 'Включено';
 $_['text_disabled']                 = 'Отключено';
 
@@ -32,12 +32,12 @@ $_['value_validation_type2']        = '+38(000)000-00-00';
 
 // Entry
 $_['entry_button_name']             = 'Текст на кнопке';
-$_['entry_status']                  = 'Статус модуля XD Zvonok';
+$_['entry_status']                  = 'Статус модуля XD Form';
 $_['entry_show_btn']                = 'Показать кнопку';    // Show button
-// $_['entry_style_status'] 		= 'Использовать xd_zamer.css';
+// $_['entry_style_status'] 		= 'Использовать xd_form.css';
 $_['entry_success_field']           = 'Текст успешной отправки';
 $_['success_field_tooltip']         = 'Допустимо использовать html-теги';
 $_['entry_captcha']                 = 'Captcha';
 
 // Error
-$_['error_permission']     = 'Warning: You do not have permission to modify XD Zvonok module!';
+$_['error_permission']              = 'Warning: You do not have permission to modify XD Form module!';

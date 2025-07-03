@@ -11,7 +11,7 @@
 !/admin/controller/extension/
 /admin/controller/extension/module/*
 !/admin/controller/extension/module/
-!/admin/controller/extension/module/xd_zamer.php
+!/admin/controller/extension/module/xd_form.php
 
 /admin/language/*
 !/admin/language/
@@ -21,7 +21,7 @@
 !/admin/language/en-gb/extension/
 /admin/language/en-gb/extension/module/*
 !/admin/language/en-gb/extension/module/
-!/admin/language/en-gb/extension/module/xd_zamer.php
+!/admin/language/en-gb/extension/module/xd_form.php
 
 /admin/language/ru-ru/*
 !/admin/language/ru-ru/
@@ -29,7 +29,7 @@
 !/admin/language/ru-ru/extension/
 /admin/language/ru-ru/extension/module/*
 !/admin/language/ru-ru/extension/module/
-!/admin/language/ru-ru/extension/module/xd_zamer.php
+!/admin/language/ru-ru/extension/module/xd_form.php
 
 /admin/view/*
 !/admin/view/
@@ -39,7 +39,7 @@
 !/admin/view/template/extension/
 /admin/view/template/extension/module/*
 !/admin/view/template/extension/module/
-!/admin/view/template/extension/module/xd_zamer.tpl
+!/admin/view/template/extension/module/xd_form.tpl
 
 /catalog/*
 !/catalog/
@@ -50,7 +50,7 @@
 !/catalog/controller/extension/
 /catalog/controller/extension/module/*
 !/catalog/controller/extension/module/
-!/catalog/controller/extension/module/xd_zamer.php
+!/catalog/controller/extension/module/xd_form.php
 
 /catalog/language/*
 !/catalog/language/
@@ -60,7 +60,7 @@
 !/catalog/language/en-gb/extension/
 /catalog/language/en-gb/extension/module/*
 !/catalog/language/en-gb/extension/module/
-!/catalog/language/en-gb/extension/module/xd_zamer.php
+!/catalog/language/en-gb/extension/module/xd_form.php
 
 /catalog/language/ru-ru/*
 !/catalog/language/ru-ru/
@@ -68,7 +68,7 @@
 !/catalog/language/ru-ru/extension/
 /catalog/language/ru-ru/extension/module/*
 !/catalog/language/ru-ru/extension/module/
-!/catalog/language/ru-ru/extension/module/xd_zamer.php
+!/catalog/language/ru-ru/extension/module/xd_form.php
 
 /catalog/view/*
 !/catalog/view/
@@ -82,23 +82,23 @@
 !/catalog/view/theme/default/template/extension/
 /catalog/view/theme/default/template/extension/module/*
 !/catalog/view/theme/default/template/extension/module/
-!/catalog/view/theme/default/template/extension/module/xd_zamer.tpl
+!/catalog/view/theme/default/template/extension/module/xd_form.tpl
 
 
 /catalog/view/theme/default/stylesheet/*
 !/catalog/view/theme/default/stylesheet/
-!/catalog/view/theme/default/stylesheet/xd_zamer.css
+!/catalog/view/theme/default/stylesheet/xd_form.css
 !/catalog/view/theme/default/stylesheet/mini_phone_button.png
 
 /catalog/view/javascript/*
 !/catalog/view/javascript/
-!/catalog/view/javascript/xd_zamer.js
+!/catalog/view/javascript/xd_form.js
 !/catalog/view/javascript/sourcebuster.min.js
 !/catalog/view/javascript/jquery.mask.min.js
 
 /system/*
 !/system/
-!/system/xd_zamer.ocmod.xml
+!/system/xd_form.ocmod.xml
 
 /image/
 /install/

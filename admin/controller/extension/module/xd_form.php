@@ -1,14 +1,14 @@
 <?php
-class ControllerExtensionModuleXDZvonok extends Controller
+class ControllerExtensionModuleXDForm extends Controller
 {
     private $error = array();
     public function index()
     {
-        $this->load->language('extension/module/xd_zamer');
+        $this->load->language('extension/module/xd_form');
         $this->document->setTitle($this->language->get('heading_name'));
         $this->load->model('setting/setting');
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-            $this->model_setting_setting->editSetting('xd_zamer_', $this->request->post);
+            $this->model_setting_setting->editSetting('xd_form_', $this->request->post);
             $this->session->data['success'] = $this->language->get('text_success');
             $this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'], 'SSL'));
         }
@@ -72,18 +72,18 @@ class ControllerExtensionModuleXDZvonok extends Controller
         if (!isset($this->request->get['module_id'])) {
             $data['breadcrumbs'][] = array(
                 'text' => $this->language->get('heading_name'),
-                'href' => $this->url->link('extension/module/xd_zamer', 'token=' . $this->session->data['token'], true)
+                'href' => $this->url->link('extension/module/xd_form', 'token=' . $this->session->data['token'], true)
             );
         } else {
             $data['breadcrumbs'][] = array(
                 'text' => $this->language->get('heading_name'),
-                'href' => $this->url->link('extension/module/xd_zamer', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], true)
+                'href' => $this->url->link('extension/module/xd_form', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], true)
             );
         }
         if (!isset($this->request->get['module_id'])) {
-            $data['action'] = $this->url->link('extension/module/xd_zamer', 'token=' . $this->session->data['token'], true);
+            $data['action'] = $this->url->link('extension/module/xd_form', 'token=' . $this->session->data['token'], true);
         } else {
-            $data['action'] = $this->url->link('extension/module/xd_zamer', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], true);
+            $data['action'] = $this->url->link('extension/module/xd_form', 'token=' . $this->session->data['token'] . '&module_id=' . $this->request->get['module_id'], true);
         }
         $data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'] . '&type=module', true);
 
@@ -91,20 +91,20 @@ class ControllerExtensionModuleXDZvonok extends Controller
         $data['languages'] = $this->model_localisation_language->getLanguages();
         $languages = $this->model_localisation_language->getLanguages();
         foreach ($languages as $language) {
-            if (isset($this->request->post['xd_zamer_name_' . $language['language_id']])) {
-                $data['xd_zamer_button_name_' . $language['language_id']] = $this->request->post['xd_zamer_button_name_' . $language['language_id']];
-                $data['xd_zamer_success_field_' . $language['language_id']] = $this->request->post['xd_zamer_success_field_' . $language['language_id']];
+            if (isset($this->request->post['xd_form_name_' . $language['language_id']])) {
+                $data['xd_form_button_name_' . $language['language_id']] = $this->request->post['xd_form_button_name_' . $language['language_id']];
+                $data['xd_form_success_field_' . $language['language_id']] = $this->request->post['xd_form_success_field_' . $language['language_id']];
             } else {
-                $data['xd_zamer_button_name_' . $language['language_id']] = $this->config->get('xd_zamer_button_name_' . $language['language_id']);
-                $data['xd_zamer_success_field_' . $language['language_id']] = $this->config->get('xd_zamer_success_field_' . $language['language_id']);
+                $data['xd_form_button_name_' . $language['language_id']] = $this->config->get('xd_form_button_name_' . $language['language_id']);
+                $data['xd_form_success_field_' . $language['language_id']] = $this->config->get('xd_form_success_field_' . $language['language_id']);
             }
         }
 
         /********************* Captchas ********************************/
-        if (isset($this->request->post['xd_zamer_captcha'])) {
-            $data['xd_zamer_captcha'] = $this->request->post['xd_zamer_captcha'];
+        if (isset($this->request->post['xd_form_captcha'])) {
+            $data['xd_form_captcha'] = $this->request->post['xd_form_captcha'];
         } else {
-            $data['xd_zamer_captcha'] = $this->config->get('xd_zamer_captcha');
+            $data['xd_form_captcha'] = $this->config->get('xd_form_captcha');
         }
 
         $this->load->model('extension/extension');
@@ -124,73 +124,73 @@ class ControllerExtensionModuleXDZvonok extends Controller
         }
 
         /********************* Modal window fields *********************/
-        if (isset($this->request->post['xd_zamer_field1_status'])) {
-            $data['xd_zamer_field1_status'] = $this->request->post['xd_zamer_field1_status'];
+        if (isset($this->request->post['xd_form_field1_status'])) {
+            $data['xd_form_field1_status'] = $this->request->post['xd_form_field1_status'];
         } else {
-            $data['xd_zamer_field1_status'] = $this->config->get('xd_zamer_field1_status');
+            $data['xd_form_field1_status'] = $this->config->get('xd_form_field1_status');
         }
-        if (isset($this->request->post['xd_zamer_field1_required'])) {
-            $data['xd_zamer_field1_required'] = $this->request->post['xd_zamer_field1_required'];
+        if (isset($this->request->post['xd_form_field1_required'])) {
+            $data['xd_form_field1_required'] = $this->request->post['xd_form_field1_required'];
         } else {
-            $data['xd_zamer_field1_required'] = $this->config->get('xd_zamer_field1_required');
+            $data['xd_form_field1_required'] = $this->config->get('xd_form_field1_required');
         }
-        if (isset($this->request->post['xd_zamer_field2_status'])) {
-            $data['xd_zamer_field2_status'] = $this->request->post['xd_zamer_field2_status'];
+        if (isset($this->request->post['xd_form_field2_status'])) {
+            $data['xd_form_field2_status'] = $this->request->post['xd_form_field2_status'];
         } else {
-            $data['xd_zamer_field2_status'] = $this->config->get('xd_zamer_field2_status');
+            $data['xd_form_field2_status'] = $this->config->get('xd_form_field2_status');
         }
-        if (isset($this->request->post['xd_zamer_field2_required'])) {
-            $data['xd_zamer_field2_required'] = $this->request->post['xd_zamer_field2_required'];
+        if (isset($this->request->post['xd_form_field2_required'])) {
+            $data['xd_form_field2_required'] = $this->request->post['xd_form_field2_required'];
         } else {
-            $data['xd_zamer_field2_required'] = $this->config->get('xd_zamer_field2_required');
+            $data['xd_form_field2_required'] = $this->config->get('xd_form_field2_required');
         }
-        if (isset($this->request->post['xd_zamer_field3_status'])) {
-            $data['xd_zamer_field3_status'] = $this->request->post['xd_zamer_field3_status'];
+        if (isset($this->request->post['xd_form_field3_status'])) {
+            $data['xd_form_field3_status'] = $this->request->post['xd_form_field3_status'];
         } else {
-            $data['xd_zamer_field3_status'] = $this->config->get('xd_zamer_field3_status');
+            $data['xd_form_field3_status'] = $this->config->get('xd_form_field3_status');
         }
-        if (isset($this->request->post['xd_zamer_field3_required'])) {
-            $data['xd_zamer_field3_required'] = $this->request->post['xd_zamer_field3_required'];
+        if (isset($this->request->post['xd_form_field3_required'])) {
+            $data['xd_form_field3_required'] = $this->request->post['xd_form_field3_required'];
         } else {
-            $data['xd_zamer_field3_required'] = $this->config->get('xd_zamer_field3_required');
+            $data['xd_form_field3_required'] = $this->config->get('xd_form_field3_required');
         }
 
-        if (isset($this->request->post['xd_zamer_agree_status'])) {
-            $data['xd_zamer_agree_status'] = $this->request->post['xd_zamer_agree_status'];
+        if (isset($this->request->post['xd_form_agree_status'])) {
+            $data['xd_form_agree_status'] = $this->request->post['xd_form_agree_status'];
         } else {
-            $data['xd_zamer_agree_status'] = $this->config->get('xd_zamer_agree_status');
+            $data['xd_form_agree_status'] = $this->config->get('xd_form_agree_status');
         }
-        if (isset($this->request->post['xd_zamer_validation_type'])) {
-            $data['xd_zamer_validation_type'] = $this->request->post['xd_zamer_validation_type'];
+        if (isset($this->request->post['xd_form_validation_type'])) {
+            $data['xd_form_validation_type'] = $this->request->post['xd_form_validation_type'];
         } else {
-            $data['xd_zamer_validation_type'] = $this->config->get('xd_zamer_validation_type');
+            $data['xd_form_validation_type'] = $this->config->get('xd_form_validation_type');
         }
-        if (isset($this->request->post['xd_zamer_show_btn'])) {
-            $data['xd_zamer_show_btn'] = $this->request->post['xd_zamer_show_btn'];
+        if (isset($this->request->post['xd_form_show_btn'])) {
+            $data['xd_form_show_btn'] = $this->request->post['xd_form_show_btn'];
         } else {
-            $data['xd_zamer_show_btn'] = $this->config->get('xd_zamer_show_btn');
+            $data['xd_form_show_btn'] = $this->config->get('xd_form_show_btn');
         }
         /********************* STATUS *********************/
-        if (isset($this->request->post['xd_zamer_status'])) {
-            $data['xd_zamer_status'] = $this->request->post['xd_zamer_status'];
+        if (isset($this->request->post['xd_form_status'])) {
+            $data['xd_form_status'] = $this->request->post['xd_form_status'];
         } else {
-            $data['xd_zamer_status'] = $this->config->get('xd_zamer_status');
+            $data['xd_form_status'] = $this->config->get('xd_form_status');
         }
         /*
-		if (isset($this->request->post['xd_zamer_style_status'])) {
-			$data['xd_zamer_style_status'] = $this->request->post['xd_zamer_style_status'];
+		if (isset($this->request->post['xd_form_style_status'])) {
+			$data['xd_form_style_status'] = $this->request->post['xd_form_style_status'];
 		} else {
-			$data['xd_zamer_style_status'] = $this->config->get('xd_zamer_style_status');
+			$data['xd_form_style_status'] = $this->config->get('xd_form_style_status');
 		}
 		*/
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');
-        $this->response->setOutput($this->load->view('extension/module/xd_zamer.tpl', $data));
+        $this->response->setOutput($this->load->view('extension/module/xd_form.tpl', $data));
     }
     protected function validate()
     {
-        if (!$this->user->hasPermission('modify', 'extension/module/xd_zamer')) {
+        if (!$this->user->hasPermission('modify', 'extension/module/xd_form')) {
             $this->error['warning'] = $this->language->get('error_permission');
         }
         return !$this->error;

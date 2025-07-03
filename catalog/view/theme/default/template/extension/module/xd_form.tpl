@@ -1,10 +1,10 @@
 <div class="modal-dialog">
     <div class="modal-content">
-        <form id="xd_zamer_form" role="form">
+        <form id="xd_form_form" role="form">
             <fieldset>
                 <div class="modal-header">
                     <button class="close" type="button" data-dismiss="modal">×</button>
-                    <h2 class="modal-title"><?php echo $xd_zamer_modal_title; ?></h2>
+                    <h2 class="modal-title"><?php echo $xd_form_modal_title; ?></h2>
                 </div>
                 <div class="modal-body">
                     <div class="col-sm-12">
@@ -39,31 +39,31 @@
                             <input id="sb_udata_uag" class="hidden" type="text" name="sb_udata_uag" value="">
                             <input id="sb_promo_code" class="hidden" type="text" name="sb_promo_code" value="">
                         </div>
-                        <?php if ($xd_zamer_field1_status) { ?>
+                        <?php if ($xd_form_field1_status) { ?>
                             <div class="input_wrapper">
-                                <div class="input-group<?php echo ($xd_zamer_field1_required) ? ' has-warning' : ''; ?>">
+                                <div class="input-group<?php echo ($xd_form_field1_required) ? ' has-warning' : ''; ?>">
                                     <span class="input-group-addon"><i class="fa fa-fw fa-user" aria-hidden="true"></i></span>
-                                    <input id="xd_zamer_name" class="form-control xd_zamer_input<?php echo ($xd_zamer_field1_required) ? ' required' : ''; ?>" type="text" name="xd_zamer_name" placeholder="<?php echo $xd_zamer_field1_title; ?>">
+                                    <input id="xd_form_name" class="form-control xd_form_input<?php echo ($xd_form_field1_required) ? ' required' : ''; ?>" type="text" name="xd_form_name" placeholder="<?php echo $xd_form_field1_title; ?>">
                                 </div>
-                                <p id="xd_zamer_name_error" class="text-error hidden"></p>
+                                <p id="xd_form_name_error" class="text-error hidden"></p>
                             </div>
                         <?php } ?>
-                        <?php if ($xd_zamer_field2_status) { ?>
+                        <?php if ($xd_form_field2_status) { ?>
                             <div class="input_wrapper">
-                                <div class="input-group<?php echo ($xd_zamer_field2_required) ? ' has-warning' : ''; ?>">
+                                <div class="input-group<?php echo ($xd_form_field2_required) ? ' has-warning' : ''; ?>">
                                     <span class="input-group-addon"><i class="fa fa-fw fa-phone-square" aria-hidden="true"></i></span>
-                                    <input id="xd_zamer_phone" class="form-control xd_zamer_input<?php echo ($xd_zamer_field2_required) ? ' required' : ''; ?>" type="tel" name="xd_zamer_phone" placeholder="<?php echo $xd_zamer_field2_title; ?>">
+                                    <input id="xd_form_phone" class="form-control xd_form_input<?php echo ($xd_form_field2_required) ? ' required' : ''; ?>" type="tel" name="xd_form_phone" placeholder="<?php echo $xd_form_field2_title; ?>">
                                 </div>
-                                <p id="xd_zamer_phone_error" class="text-error hidden"></p>
+                                <p id="xd_form_phone_error" class="text-error hidden"></p>
                             </div>
                         <?php } ?>
-                        <?php if ($xd_zamer_field3_status) { ?>
+                        <?php if ($xd_form_field3_status) { ?>
                             <div class="input_wrapper">
-                                <label for="xd_zamer_message" class="hidden"><?php echo $xd_zamer_field3_title; ?></label>
-                                <div class="form-group<?php echo ($xd_zamer_field3_required) ? ' has-warning' : ''; ?>">
-                                    <textarea id="xd_zamer_message" class="form-control xd_zamer_input<?php echo ($xd_zamer_field3_required)  ? ' required' : ''; ?>" name="xd_zamer_message" rows="3" placeholder="<?php echo $xd_zamer_field3_title; ?>"></textarea>
+                                <label for="xd_form_message" class="hidden"><?php echo $xd_form_field3_title; ?></label>
+                                <div class="form-group<?php echo ($xd_form_field3_required) ? ' has-warning' : ''; ?>">
+                                    <textarea id="xd_form_message" class="form-control xd_form_input<?php echo ($xd_form_field3_required)  ? ' required' : ''; ?>" name="xd_form_message" rows="3" placeholder="<?php echo $xd_form_field3_title; ?>"></textarea>
                                 </div>
-                                <p id="xd_zamer_message_error" class="text-error hidden"></p>
+                                <p id="xd_form_message_error" class="text-error hidden"></p>
                             </div>
                         <?php } ?>
                         <?php if ($captcha !== '') { ?>
@@ -71,15 +71,15 @@
                                 <div class="form-group">
                                     <?php echo $captcha; ?>
                                 </div>
-                                <p id="xd_zamer_captcha_error" class="text-error hidden"></p>
+                                <p id="xd_form_captcha_error" class="text-error hidden"></p>
                             </div>
                         <?php } ?>
                     </div>
                     <div class=" clearfix">
                     </div>
-                    <?php if ($xd_zamer_agree_status) { ?>
+                    <?php if ($xd_form_agree_status) { ?>
                         <div class="col-sm-12">
-                            <p><?php echo $xd_zamer_text_agree; ?></p>
+                            <p><?php echo $xd_form_text_agree; ?></p>
                         </div>
                         <div class="clearfix"></div>
                     <?php } ?>
@@ -88,7 +88,7 @@
                     <div class="col-sm-2 hidden-xs">
                     </div>
                     <div class="col-sm-8 col-xs-12">
-                        <button type="submit" class="btn btn-lg btn-block btn-default"><?php echo $xd_zamer_submit_button; ?></button>
+                        <button type="submit" class="btn btn-lg btn-block btn-default"><?php echo $xd_form_submit_button; ?></button>
                     </div>
                     <div class="col-sm-2 hidden-xs">
                     </div>

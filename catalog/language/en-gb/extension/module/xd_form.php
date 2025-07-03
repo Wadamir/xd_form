@@ -1,15 +1,15 @@
 <?php
-$_['xd_zamer_button_name']     = 'Request a call back';
-$_['xd_zamer_modal_title']     = 'Callback order';
-$_['xd_zamer_field1_title']     = 'Name';
-$_['xd_zamer_field2_title']     = 'Phone';
-$_['xd_zamer_field3_title']     = 'Message';
-$_['xd_zamer_required_text']     = 'required field';
-$_['xd_zamer_success_field']     = '<h2>Thank you!<br />We will contact you as soon as possible.</h2>';
-$_['xd_zamer_error_required']     = 'Please, fill required fields!';
-$_['xd_zamer_error_sending']     = 'Sending error, try again later!';
-$_['xd_zamer_text_agree']         = 'By clicking "SEND" button, you have read and agree to <a href="%s" class="agree"><b>%s</b></a>';
-$_['xd_zamer_submit_button']     = 'SEND';
+$_['xd_form_button_name']     = 'Request a call back';
+$_['xd_form_modal_title']     = 'Callback order';
+$_['xd_form_field1_title']     = 'Name';
+$_['xd_form_field2_title']     = 'Phone';
+$_['xd_form_field3_title']     = 'Message';
+$_['xd_form_required_text']     = 'required field';
+$_['xd_form_success_field']     = '<h2>Thank you!<br />We will contact you as soon as possible.</h2>';
+$_['xd_form_error_required']     = 'Please, fill required fields!';
+$_['xd_form_error_sending']     = 'Sending error, try again later!';
+$_['xd_form_text_agree']         = 'By clicking "SEND" button, you have read and agree to <a href="%s" class="agree"><b>%s</b></a>';
+$_['xd_form_submit_button']     = 'SEND';
 
 // text
 $_['text_name']                 = 'Name: ';
@@ -18,7 +18,7 @@ $_['text_message']                 = 'Message: ';
 $_['text_ip']                     = 'IP-address: ';
 $_['text_forwarded_ip']         = 'Forwarded IP: ';
 $_['text_user_agent']             = 'User agent: ';
-$_['text_sender_name']             = 'XD Zvonok';
+$_['text_sender_name']             = 'XD Form';
 $_['text_mail_title']             = 'Callback order from %s';
 
 // errors

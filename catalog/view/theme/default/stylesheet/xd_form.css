@@ -1,4 +1,4 @@
-#xd_zamer_phone_button {
+#xd_form_phone_button {
     bottom: 25px;
     left: 160px;
     position: fixed;
@@ -11,28 +11,28 @@
     display: none !important;
 }
 
-#xd_zamer_form .input_wrapper {
+#xd_form_form .input_wrapper {
     margin-bottom: 12px;
 }
 
-#xd_zamer_form .form-group {
+#xd_form_form .form-group {
     margin-bottom: 0;
 }
 
-#xd_zamer_form .form-group~.text-error,
-#xd_zamer_form .input-group~.text-error {
+#xd_form_form .form-group~.text-error,
+#xd_form_form .input-group~.text-error {
     display: none;
 }
 
-#xd_zamer_form .form-group.has-error~.text-error,
-#xd_zamer_form .input-group.has-error~.text-error {
+#xd_form_form .form-group.has-error~.text-error,
+#xd_form_form .input-group.has-error~.text-error {
     display: block;
     color: #a94442;
     font-size: 12px;
     margin-top: 5px;
 }
 
-#xd_zamer_form .text-error {
+#xd_form_form .text-error {
     margin: 0;
 }
 
