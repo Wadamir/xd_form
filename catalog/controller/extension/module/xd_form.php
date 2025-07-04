@@ -144,6 +144,11 @@ class ControllerExtensionModuleXDForm extends Controller
                 $mail_text .= $this->language->get('text_phone') . $xd_form_phone . " \r\n";
             }
 
+            if (isset($this->request->post['xd_form_email'])) {
+                $xd_form_email = $this->request->post['xd_form_email'];
+                $mail_text .= $this->language->get('text_email') . $xd_form_email . " \r\n";
+            }
+
             if (isset($this->request->post['xd_form_message'])) {
                 $xd_form_message = $this->request->post['xd_form_message'];
                 $mail_text .= $this->language->get('text_message') . $xd_form_message . " \r\n";
@@ -189,94 +194,101 @@ class ControllerExtensionModuleXDForm extends Controller
             // Private data end
 
             // Source first visit
-            $mail_text .= " \r\n" . $this->language->get('xd_form_sb_first_visit_title') . " \r\n";
-            if (isset($this->request->post['xd_form_sb_first_typ']) && $this->request->post['xd_form_sb_first_typ'] != '') {
-                $xd_form_sb_first_typ = $this->request->post['xd_form_sb_first_typ'];
-                $mail_text .= $this->language->get('xd_form_sb_first_typ') . $xd_form_sb_first_typ . " \r\n";
-            }
-            if (isset($this->request->post['xd_form_sb_first_src']) && $this->request->post['xd_form_sb_first_src'] != '') {
-                $xd_form_sb_first_src = $this->request->post['xd_form_sb_first_src'];
-                $mail_text .= $this->language->get('xd_form_sb_first_src') . $xd_form_sb_first_src . " \r\n";
-            }
-            if (isset($this->request->post['xd_form_sb_first_mdm']) && $this->request->post['xd_form_sb_first_mdm'] != '') {
-                $xd_form_sb_first_mdm = $this->request->post['xd_form_sb_first_mdm'];
-                $mail_text .= $this->language->get('xd_form_sb_first_mdm') . $xd_form_sb_first_mdm . " \r\n";
-            }
-            if (isset($this->request->post['xd_form_sb_first_cmp']) && $this->request->post['xd_form_sb_first_cmp'] != '') {
-                $xd_form_sb_first_cmp = $this->request->post['xd_form_sb_first_cmp'];
-                $mail_text .= $this->language->get('xd_form_sb_first_cmp') . $xd_form_sb_first_cmp . " \r\n";
-            }
-            if (isset($this->request->post['xd_form_sb_first_cnt']) && $this->request->post['xd_form_sb_first_cnt'] != '') {
-                $xd_form_sb_first_cnt = $this->request->post['xd_form_sb_first_cnt'];
-                $mail_text .= $this->language->get('xd_form_sb_first_cnt') . $xd_form_sb_first_cnt . " \r\n";
-            }
-            if (isset($this->request->post['xd_form_sb_first_trm']) && $this->request->post['xd_form_sb_first_trm'] != '') {
-                $xd_form_sb_first_trm = $this->request->post['xd_form_sb_first_trm'];
-                $mail_text .= $this->language->get('xd_form_sb_first_trm') . $xd_form_sb_first_trm . " \r\n";
-            }
-            if (isset($this->request->post['xd_form_sb_first_add_fd']) && $this->request->post['xd_form_sb_first_add_fd'] != '') {
-                $xd_form_sb_first_add_fd = $this->request->post['xd_form_sb_first_add_fd'];
-                $mail_text .= $this->language->get('xd_form_sb_first_add_fd') . $xd_form_sb_first_add_fd . " \r\n";
-            }
-            if (isset($this->request->post['xd_form_sb_first_add_ep']) && $this->request->post['xd_form_sb_first_add_ep'] != '') {
-                $xd_form_sb_first_add_ep = $this->request->post['xd_form_sb_first_add_ep'];
-                $mail_text .= $this->language->get('xd_form_sb_first_add_ep') . $xd_form_sb_first_add_ep . " \r\n";
-            }
-            if (isset($this->request->post['xd_form_sb_first_add_rf']) && $this->request->post['xd_form_sb_first_add_rf'] != '') {
-                $xd_form_sb_first_add_rf = $this->request->post['xd_form_sb_first_add_rf'];
-                $mail_text .= $this->language->get('xd_form_sb_first_add_rf') . $xd_form_sb_first_add_rf . " \r\n";
+            if ($xd_form_setting['exan_status']) {
+                $mail_text .= " \r\n" . $this->language->get('xd_form_sb_first_visit_title') . " \r\n";
+
+                if (isset($this->request->post['xd_form_sb_first_typ']) && $this->request->post['xd_form_sb_first_typ'] != '') {
+                    $xd_form_sb_first_typ = $this->request->post['xd_form_sb_first_typ'];
+                    $mail_text .= $this->language->get('xd_form_sb_first_typ') . $xd_form_sb_first_typ . " \r\n";
+                }
+                if (isset($this->request->post['xd_form_sb_first_src']) && $this->request->post['xd_form_sb_first_src'] != '') {
+                    $xd_form_sb_first_src = $this->request->post['xd_form_sb_first_src'];
+                    $mail_text .= $this->language->get('xd_form_sb_first_src') . $xd_form_sb_first_src . " \r\n";
+                }
+                if (isset($this->request->post['xd_form_sb_first_mdm']) && $this->request->post['xd_form_sb_first_mdm'] != '') {
+                    $xd_form_sb_first_mdm = $this->request->post['xd_form_sb_first_mdm'];
+                    $mail_text .= $this->language->get('xd_form_sb_first_mdm') . $xd_form_sb_first_mdm . " \r\n";
+                }
+                if (isset($this->request->post['xd_form_sb_first_cmp']) && $this->request->post['xd_form_sb_first_cmp'] != '') {
+                    $xd_form_sb_first_cmp = $this->request->post['xd_form_sb_first_cmp'];
+                    $mail_text .= $this->language->get('xd_form_sb_first_cmp') . $xd_form_sb_first_cmp . " \r\n";
+                }
+                if (isset($this->request->post['xd_form_sb_first_cnt']) && $this->request->post['xd_form_sb_first_cnt'] != '') {
+                    $xd_form_sb_first_cnt = $this->request->post['xd_form_sb_first_cnt'];
+                    $mail_text .= $this->language->get('xd_form_sb_first_cnt') . $xd_form_sb_first_cnt . " \r\n";
+                }
+                if (isset($this->request->post['xd_form_sb_first_trm']) && $this->request->post['xd_form_sb_first_trm'] != '') {
+                    $xd_form_sb_first_trm = $this->request->post['xd_form_sb_first_trm'];
+                    $mail_text .= $this->language->get('xd_form_sb_first_trm') . $xd_form_sb_first_trm . " \r\n";
+                }
+                if (isset($this->request->post['xd_form_sb_first_add_fd']) && $this->request->post['xd_form_sb_first_add_fd'] != '') {
+                    $xd_form_sb_first_add_fd = $this->request->post['xd_form_sb_first_add_fd'];
+                    $mail_text .= $this->language->get('xd_form_sb_first_add_fd') . $xd_form_sb_first_add_fd . " \r\n";
+                }
+                if (isset($this->request->post['xd_form_sb_first_add_ep']) && $this->request->post['xd_form_sb_first_add_ep'] != '') {
+                    $xd_form_sb_first_add_ep = $this->request->post['xd_form_sb_first_add_ep'];
+                    $mail_text .= $this->language->get('xd_form_sb_first_add_ep') . $xd_form_sb_first_add_ep . " \r\n";
+                }
+                if (isset($this->request->post['xd_form_sb_first_add_rf']) && $this->request->post['xd_form_sb_first_add_rf'] != '') {
+                    $xd_form_sb_first_add_rf = $this->request->post['xd_form_sb_first_add_rf'];
+                    $mail_text .= $this->language->get('xd_form_sb_first_add_rf') . $xd_form_sb_first_add_rf . " \r\n";
+                }
             }
             // Source first visit end
 
             // Source current visit
-            $mail_text .= " \r\n" . $this->language->get('xd_form_sb_current_visit_title') . " \r\n";
-            if (isset($this->request->post['xd_form_sb_current_typ']) && $this->request->post['xd_form_sb_current_typ'] != '') {
-                $xd_form_sb_current_typ = $this->request->post['xd_form_sb_current_typ'];
-                $mail_text .= $this->language->get('xd_form_sb_current_typ') . $xd_form_sb_current_typ . " \r\n";
-            }
-            if (isset($this->request->post['xd_form_sb_current_src']) && $this->request->post['xd_form_sb_current_src'] != '') {
-                $xd_form_sb_current_src = $this->request->post['xd_form_sb_current_src'];
-                $mail_text .= $this->language->get('xd_form_sb_current_src') . $xd_form_sb_current_src . " \r\n";
-            }
-            if (isset($this->request->post['xd_form_sb_current_mdm']) && $this->request->post['xd_form_sb_current_mdm'] != '') {
-                $xd_form_sb_current_mdm = $this->request->post['xd_form_sb_current_mdm'];
-                $mail_text .= $this->language->get('xd_form_sb_current_mdm') . $xd_form_sb_current_mdm . " \r\n";
-            }
-            if (isset($this->request->post['xd_form_sb_current_cmp']) && $this->request->post['xd_form_sb_current_cmp'] != '') {
-                $xd_form_sb_current_cmp = $this->request->post['xd_form_sb_current_cmp'];
-                $mail_text .= $this->language->get('xd_form_sb_current_cmp') . $xd_form_sb_current_cmp . " \r\n";
-            }
-            if (isset($this->request->post['xd_form_sb_current_cnt']) && $this->request->post['xd_form_sb_current_cnt'] != '') {
-                $xd_form_sb_current_cnt = $this->request->post['xd_form_sb_current_cnt'];
-                $mail_text .= $this->language->get('xd_form_sb_current_cnt') . $xd_form_sb_current_cnt . " \r\n";
-            }
-            if (isset($this->request->post['xd_form_sb_current_trm']) && $this->request->post['xd_form_sb_current_trm'] != '') {
-                $xd_form_sb_current_trm = $this->request->post['xd_form_sb_current_trm'];
-                $mail_text .= $this->language->get('xd_form_sb_current_trm') . $xd_form_sb_current_trm . " \r\n";
-            }
-            if (isset($this->request->post['xd_form_sb_current_add_fd']) && $this->request->post['xd_form_sb_current_add_fd'] != '') {
-                $xd_form_sb_current_add_fd = $this->request->post['xd_form_sb_current_add_fd'];
-                $mail_text .= $this->language->get('xd_form_sb_current_add_fd') . $xd_form_sb_current_add_fd . " \r\n";
-            }
-            if (isset($this->request->post['xd_form_sb_current_add_ep']) && $this->request->post['xd_form_sb_current_add_ep'] != '') {
-                $xd_form_sb_current_add_ep = $this->request->post['xd_form_sb_current_add_ep'];
-                $mail_text .= $this->language->get('xd_form_sb_current_add_ep') . $xd_form_sb_current_add_ep . " \r\n";
-            }
-            if (isset($this->request->post['xd_form_sb_current_add_rf']) && $this->request->post['xd_form_sb_current_add_rf'] != '') {
-                $xd_form_sb_current_add_rf = $this->request->post['xd_form_sb_current_add_rf'];
-                $mail_text .= $this->language->get('xd_form_sb_current_add_rf') . $xd_form_sb_current_add_rf . " \r\n";
+            if ($xd_form_setting['exan_status']) {
+                $mail_text .= " \r\n" . $this->language->get('xd_form_sb_current_visit_title') . " \r\n";
+                if (isset($this->request->post['xd_form_sb_current_typ']) && $this->request->post['xd_form_sb_current_typ'] != '') {
+                    $xd_form_sb_current_typ = $this->request->post['xd_form_sb_current_typ'];
+                    $mail_text .= $this->language->get('xd_form_sb_current_typ') . $xd_form_sb_current_typ . " \r\n";
+                }
+                if (isset($this->request->post['xd_form_sb_current_src']) && $this->request->post['xd_form_sb_current_src'] != '') {
+                    $xd_form_sb_current_src = $this->request->post['xd_form_sb_current_src'];
+                    $mail_text .= $this->language->get('xd_form_sb_current_src') . $xd_form_sb_current_src . " \r\n";
+                }
+                if (isset($this->request->post['xd_form_sb_current_mdm']) && $this->request->post['xd_form_sb_current_mdm'] != '') {
+                    $xd_form_sb_current_mdm = $this->request->post['xd_form_sb_current_mdm'];
+                    $mail_text .= $this->language->get('xd_form_sb_current_mdm') . $xd_form_sb_current_mdm . " \r\n";
+                }
+                if (isset($this->request->post['xd_form_sb_current_cmp']) && $this->request->post['xd_form_sb_current_cmp'] != '') {
+                    $xd_form_sb_current_cmp = $this->request->post['xd_form_sb_current_cmp'];
+                    $mail_text .= $this->language->get('xd_form_sb_current_cmp') . $xd_form_sb_current_cmp . " \r\n";
+                }
+                if (isset($this->request->post['xd_form_sb_current_cnt']) && $this->request->post['xd_form_sb_current_cnt'] != '') {
+                    $xd_form_sb_current_cnt = $this->request->post['xd_form_sb_current_cnt'];
+                    $mail_text .= $this->language->get('xd_form_sb_current_cnt') . $xd_form_sb_current_cnt . " \r\n";
+                }
+                if (isset($this->request->post['xd_form_sb_current_trm']) && $this->request->post['xd_form_sb_current_trm'] != '') {
+                    $xd_form_sb_current_trm = $this->request->post['xd_form_sb_current_trm'];
+                    $mail_text .= $this->language->get('xd_form_sb_current_trm') . $xd_form_sb_current_trm . " \r\n";
+                }
+                if (isset($this->request->post['xd_form_sb_current_add_fd']) && $this->request->post['xd_form_sb_current_add_fd'] != '') {
+                    $xd_form_sb_current_add_fd = $this->request->post['xd_form_sb_current_add_fd'];
+                    $mail_text .= $this->language->get('xd_form_sb_current_add_fd') . $xd_form_sb_current_add_fd . " \r\n";
+                }
+                if (isset($this->request->post['xd_form_sb_current_add_ep']) && $this->request->post['xd_form_sb_current_add_ep'] != '') {
+                    $xd_form_sb_current_add_ep = $this->request->post['xd_form_sb_current_add_ep'];
+                    $mail_text .= $this->language->get('xd_form_sb_current_add_ep') . $xd_form_sb_current_add_ep . " \r\n";
+                }
+                if (isset($this->request->post['xd_form_sb_current_add_rf']) && $this->request->post['xd_form_sb_current_add_rf'] != '') {
+                    $xd_form_sb_current_add_rf = $this->request->post['xd_form_sb_current_add_rf'];
+                    $mail_text .= $this->language->get('xd_form_sb_current_add_rf') . $xd_form_sb_current_add_rf . " \r\n";
+                }
             }
             // Source current visit end
 
             // Current session
-            $mail_text .= " \r\n" . $this->language->get('xd_form_sb_session_title') . " \r\n";
-            if (isset($this->request->post['xd_form_sb_session_pgs']) && $this->request->post['xd_form_sb_session_pgs'] != '') {
-                $xd_form_sb_session_pgs = $this->request->post['xd_form_sb_session_pgs'];
-                $mail_text .= $this->language->get('xd_form_sb_session_pgs') . $xd_form_sb_session_pgs . " \r\n";
-            }
-            if (isset($this->request->post['xd_form_sb_session_cpg']) && $this->request->post['xd_form_sb_session_cpg'] != '') {
-                $xd_form_sb_session_cpg = $this->request->post['xd_form_sb_session_cpg'];
-                $mail_text .= $this->language->get('xd_form_sb_session_cpg') . $xd_form_sb_session_cpg . " \r\n";
+            if ($xd_form_setting['exan_status']) {
+                $mail_text .= " \r\n" . $this->language->get('xd_form_sb_session_title') . " \r\n";
+                if (isset($this->request->post['xd_form_sb_session_pgs']) && $this->request->post['xd_form_sb_session_pgs'] != '') {
+                    $xd_form_sb_session_pgs = $this->request->post['xd_form_sb_session_pgs'];
+                    $mail_text .= $this->language->get('xd_form_sb_session_pgs') . $xd_form_sb_session_pgs . " \r\n";
+                }
+                if (isset($this->request->post['xd_form_sb_session_cpg']) && $this->request->post['xd_form_sb_session_cpg'] != '') {
+                    $xd_form_sb_session_cpg = $this->request->post['xd_form_sb_session_cpg'];
+                    $mail_text .= $this->language->get('xd_form_sb_session_cpg') . $xd_form_sb_session_cpg . " \r\n";
+                }
             }
             // Current session end
 

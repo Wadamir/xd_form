@@ -32,7 +32,7 @@ $_['text_ip']                       = 'IP-address: ';
 $_['text_forwarded_ip']             = 'Forwarded IP: ';
 $_['text_user_agent']               = 'User agent: ';
 $_['text_sender_name']              = 'XD Form';
-$_['text_mail_title']               = 'Form order - %s';
+$_['text_mail_title']               = 'XD Form - %s';
 
 // sourcebuster
 $_['xd_form_sb_first_visit_title']          = 'First visit';

@@ -26,12 +26,13 @@ $_['spam_protection']   = '<h3>Большое спасибо!<br />Ваше со
 // Text
 $_['text_name']                     = 'Имя: ';
 $_['text_phone']                    = 'Телефон: ';
+$_['text_email']                    = 'Email: ';
 $_['text_message']                  = 'Сообщение: ';
 $_['text_ip']                       = 'IP-адрес: ';
 $_['text_forwarded_ip']             = 'Forwarded IP: ';
 $_['text_user_agent']               = 'User agent: ';
 $_['text_sender_name']              = 'XD Form';
-$_['text_mail_title']               = 'Заказ обратного звонка - %s';
+$_['text_mail_title']               = 'Отправка формы - %s';
 
 // sourcebuster
 $_['xd_form_sb_first_visit_title']          = 'Первый визит';
