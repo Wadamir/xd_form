@@ -96,5 +96,7 @@
 !/catalog/view/javascript/sourcebuster.min.js
 !/catalog/view/javascript/jquery.mask.min.js
 
+/system/
+
 /image/
 /install/
