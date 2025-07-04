@@ -25,10 +25,10 @@ class ControllerExtensionModuleXDForm extends Controller
             // var_dump($data['status']);
             if ($data['status']) {
                 // Link to styles & scripts
-                $this->document->addScript('/catalog/view/javascript/xd_form.js');
-                $this->document->addScript('/catalog/view/javascript/jquery.mask.min.js');
-                $this->document->addScript('/catalog/view/javascript/sourcebuster.min.js');
-                $this->document->addStyle('/catalog/view/theme/default/stylesheet/xd_form.css');
+                $this->document->addScript('view/javascript/xd_form.js');
+                $this->document->addScript('view/javascript/jquery.mask.min.js');
+                $this->document->addScript('view/javascript/sourcebuster.min.js');
+                $this->document->addStyle('view/theme/default/stylesheet/xd_form.css');
 
                 // Get language data
                 $data['required_text'] = $this->language->get('required_text');
