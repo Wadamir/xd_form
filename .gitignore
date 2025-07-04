@@ -41,6 +41,11 @@
 !/admin/view/template/extension/module/
 !/admin/view/template/extension/module/xd_form.tpl
 
+/admin/view/stylesheet/*
+!/admin/view/stylesheet/
+!/admin/view/stylesheet/xd_form.css
+!/admin/view/stylesheet/mini_phone_button.png
+
 /catalog/*
 !/catalog/
 
