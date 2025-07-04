@@ -194,7 +194,7 @@ class ControllerExtensionModuleXDForm extends Controller
             // Private data end
 
             // Source first visit
-            if ($xd_form_setting['exan_status']) {
+            if ($this-exan_status) {
                 $mail_text .= " \r\n" . $this->language->get('xd_form_sb_first_visit_title') . " \r\n";
 
                 if (isset($this->request->post['xd_form_sb_first_typ']) && $this->request->post['xd_form_sb_first_typ'] != '') {
@@ -237,7 +237,7 @@ class ControllerExtensionModuleXDForm extends Controller
             // Source first visit end
 
             // Source current visit
-            if ($xd_form_setting['exan_status']) {
+            if ($this-exan_status) {
                 $mail_text .= " \r\n" . $this->language->get('xd_form_sb_current_visit_title') . " \r\n";
                 if (isset($this->request->post['xd_form_sb_current_typ']) && $this->request->post['xd_form_sb_current_typ'] != '') {
                     $xd_form_sb_current_typ = $this->request->post['xd_form_sb_current_typ'];
@@ -279,7 +279,7 @@ class ControllerExtensionModuleXDForm extends Controller
             // Source current visit end
 
             // Current session
-            if ($xd_form_setting['exan_status']) {
+            if ($this-exan_status) {
                 $mail_text .= " \r\n" . $this->language->get('xd_form_sb_session_title') . " \r\n";
                 if (isset($this->request->post['xd_form_sb_session_pgs']) && $this->request->post['xd_form_sb_session_pgs'] != '') {
                     $xd_form_sb_session_pgs = $this->request->post['xd_form_sb_session_pgs'];
