@@ -25,8 +25,9 @@ $_['text_tab_help']         = 'Help';
 // Fields
 $_['field1_title']          = 'Name';
 $_['field2_title']          = 'Phone';
-$_['field3_title']          = 'Message';
-$_['field4_title']          = 'Captcha';
+$_['field3_title']          = 'Email';
+$_['field4_title']          = 'Message';
+$_['field5_title']          = 'Captcha';
 $_['agree_title']           = 'Require compliance with ';
 $_['field_required']        = 'Required field';
 
@@ -49,10 +50,12 @@ $_['value_validation_type2']        = '+38(000)000-00-00';
 $_['entry_spam_protection']         = 'Additional spam protection';
 
 // Entry
-$_['entry_button_name']             = 'Text on button (not visible on standard button)';
+$_['entry_form_title']              = 'Form title';
+$_['entry_form_subtitle']           = 'Form subtitle';
+$_['entry_form_submit']             = 'Form submit button text';
 $_['entry_status']                  = 'Enable XD Form module';
 $_['entry_success_field']           = 'Success pop-up window text';
-$_['success_field_tooltip']         = 'Using HTML tags is allowed';
+$_['entry_html_tags']               = 'using HTML tags is allowed';
 
 // Success
 $_['entry_success_type']            = 'After successfully sending the request';

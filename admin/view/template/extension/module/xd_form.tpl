@@ -25,7 +25,7 @@
             <?php } ?>
             <ul class="nav nav-tabs mb-0">
                 <li class="active"><a href="#settings_main" data-toggle="tab"><?php echo $settings_main; ?></a></li>
-                <li><a href="#settings_style" data-toggle="tab"><?php echo $settings_style; ?></a></li>
+                <li class="d-none hidden"><a href="#settings_style" data-toggle="tab"><?php echo $settings_style; ?></a></li>
                 <li class="hidden"><a href="#settings_sms" data-toggle="tab"><?php echo $settings_sms; ?></a></li>
                 <li><a href="#settings_analytics" data-toggle="tab"><?php echo $settings_analytics; ?></a></li>
                 <li><a href="#text_tab_help" data-toggle="tab"><?php echo $text_tab_help; ?></a></li>
@@ -36,16 +36,39 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-6 col-xs-12">
-                                    <label class="control-label mb-10"><?php echo $entry_button_name; ?></label>
+                                    <label class="control-label mb-10"><?php echo $entry_form_title; ?></label>
                                     <?php foreach ($languages as $language) { ?>
                                         <?php $language_id = $language['language_id']; ?>
                                         <div class="input-group mb-15">
-                                            <span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span>
-                                            <input type="text" name="xd_form[button_name][<?php echo $language_id; ?>]" placeholder="<?php echo $entry_button_name; ?>" value="<?php echo isset($xd_form['button_name'][$language_id]) ? $xd_form['button_name'][$language_id] : ''; ?>" class="form-control" />
+                                            <span class="input-group-addon"><img src="language/<?php echo $language['code']; ?>/<?php echo $language['code']; ?>.png" title="<?php echo $language['name']; ?>" /></span>
+                                            <input type="text" name="xd_form[form_title][<?php echo $language_id; ?>]" placeholder="<?php echo $entry_form_title; ?>" value="<?php echo isset($xd_form['form_title'][$language_id]) ? $xd_form['form_title'][$language_id] : ''; ?>" class="form-control" />
                                         </div>
                                     <?php } ?>
                                 </div>
-                                <div class="col-lg-6 col-xs-12"></div>
+                                <div class="col-lg-6 col-xs-12">
+                                    <label class="control-label mb-10"><?php echo $entry_form_subtitle; ?> (<?php echo $entry_html_tags; ?>)</label>
+                                    <?php foreach ($languages as $language) { ?>
+                                        <?php $language_id = $language['language_id']; ?>
+                                        <div class="input-group mb-15">
+                                            <span class="input-group-addon"><img src="language/<?php echo $language['code']; ?>/<?php echo $language['code']; ?>.png" title="<?php echo $language['name']; ?>" /></span>
+                                            <input type="text" name="xd_form[form_subtitle][<?php echo $language_id; ?>]" placeholder="<?php echo $entry_form_subtitle; ?>" value="<?php echo isset($xd_form['form_subtitle'][$language_id]) ? $xd_form['form_subtitle'][$language_id] : ''; ?>" class="form-control" />
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-xs-12">
+                                    <label class="control-label mb-10"><?php echo $entry_form_submit; ?></label>
+                                    <?php foreach ($languages as $language) { ?>
+                                        <?php $language_id = $language['language_id']; ?>
+                                        <div class="input-group mb-15">
+                                            <span class="input-group-addon"><img src="language/<?php echo $language['code']; ?>/<?php echo $language['code']; ?>.png" title="<?php echo $language['name']; ?>" /></span>
+                                            <input type="text" name="xd_form[form_submit][<?php echo $language_id; ?>]" placeholder="<?php echo $entry_form_submit; ?>" value="<?php echo isset($xd_form['form_submit'][$language_id]) ? $xd_form['form_submit'][$language_id] : ''; ?>" class="form-control" />
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                                <div class="col-lg-6 col-xs-12">
+                                </div>
                             </div>
                             <div class="row pt-15" style="border-top: 1px solid #e8e8e8;">
                                 <div class="col-lg-6 col-xs-12">
@@ -63,11 +86,11 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-xs-12" id="xd_form_success_text" style="<?php if (isset($xd_form['success_type']) && boolval($xd_form['success_type'])) { ?>display:none;<?php } ?>">
-                                    <label class="control-label"><?php echo $entry_success_field; ?> (<?php echo $success_field_tooltip; ?>)</label>
+                                    <label class="control-label"><?php echo $entry_success_field; ?> (<?php echo $entry_html_tags; ?>)</label>
                                     <?php foreach ($languages as $language) { ?>
                                         <?php $language_id = $language['language_id']; ?>
                                         <div class="input-group mb-15">
-                                            <span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span>
+                                            <span class="input-group-addon"><img src="language/<?php echo $language['code']; ?>/<?php echo $language['code']; ?>.png" title="<?php echo $language['name']; ?>" /></span>
                                             <input type="text" name="xd_form[success_field][<?php echo $language_id; ?>]" placeholder="<?php echo $entry_success_field; ?>" value="<?php echo isset($xd_form['success_field'][$language_id]) ? $xd_form['success_field'][$language_id] : ''; ?>" class="form-control" />
                                         </div>
                                     <?php } ?>
@@ -143,6 +166,28 @@
                                 <div class="col-lg-6 col-xs-12">
                                     <label class="control-label"><?php echo $field4_title; ?></label>
                                     <div class="custom-select mb-15">
+                                        <select name="xd_form[field4_status]" class="form-control">
+                                            <?php if ($xd_form['field4_status'] == '1') { ?>
+                                                <option value="0"><?php echo $text_disabled; ?></option>
+                                                <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+                                                <option value="2"><?php echo $field_required; ?></option>
+                                            <?php } elseif ($xd_form['field4_status'] == '2') { ?>
+                                                <option value="0"><?php echo $text_disabled; ?></option>
+                                                <option value="1"><?php echo $text_enabled; ?></option>
+                                                <option value="2" selected="selected"><?php echo $field_required; ?></option>
+                                            <?php } else { ?>
+                                                <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+                                                <option value="1"><?php echo $text_enabled; ?></option>
+                                                <option value="2"><?php echo $field_required; ?></option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6 col-xs-12">
+                                    <label class="control-label"><?php echo $field5_title; ?></label>
+                                    <div class="custom-select mb-15">
                                         <select name="xd_form[captcha]" class="form-control">
                                             <?php if (!isset($xd_form['captcha']) || $xd_form['captcha'] === '') { ?>
                                                 <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
@@ -159,8 +204,6 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-lg-6 col-xs-12">
                                     <label class="control-label" for="agree_status"><?php echo $agree_title; ?></label>
                                     <div class="custom-select mb-15">
@@ -176,8 +219,6 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-6 col-xs-12">
-                                </div>
                             </div>
                             <div class="row pt-15" style="border-top: 1px solid #e8e8e8;">
                                 <div class="col-lg-4 col-xs-12">
@@ -185,7 +226,7 @@
                                     <?php foreach ($languages as $language) { ?>
                                         <?php $language_id = $language['language_id']; ?>
                                         <div class="input-group mb-15">
-                                            <span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span>
+                                            <span class="input-group-addon"><img src="language/<?php echo $language['code']; ?>/<?php echo $language['code']; ?>.png" title="<?php echo $language['name']; ?>" /></span>
                                             <input type="text" name="xd_form[field_custom_title][<?php echo $language_id; ?>]" placeholder="<?php echo $field_custom_title_entry; ?>" value="<?php echo isset($xd_form['field_custom_title'][$language_id]) ? $xd_form['field_custom_title'][$language_id] : ''; ?>" class="form-control" />
                                         </div>
                                     <?php } ?>
@@ -279,7 +320,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="settings_style" class="tab-pane fade">
+                <div id="settings_style" class="tab-pane fade d-none hidden">
                     <div class="panel panel-default" style="border-top:0;">
                         <div class="panel-heading hidden">
                             <h2><?php echo $tab_styles; ?></h2>
@@ -364,7 +405,7 @@
                             <!---------- Google.com ------------>
                             <hr class="main" />
                             <h3 class="text-center mb-15"><?php echo $google_form_title; ?></h3>
-                            <div class="row">
+                            <div class="row d-none hidden">
                                 <div class="col-sm-6 col-xs-12">
                                     <label for="google_category_btn"><?php echo $google_category_btn_title; ?></label>
                                     <input type="text" name="xd_form[google_category_btn]" value="<?php echo isset($xd_form['google_category_btn']) ? $xd_form['google_category_btn'] : ''; ?>" placeholder="<?php echo $google_category_btn_title; ?>" id="google_category_btn" class="form-control mb-15" />
@@ -418,8 +459,10 @@
                                     <input type="text" name="xd_form[ya_counter]" value="<?php echo isset($xd_form['ya_counter']) ? $xd_form['ya_counter'] : ''; ?>" placeholder="<?php echo $ya_counter_title; ?>" id="ya_counter" class="form-control mb-15" />
                                 </div>
                                 <div class="col-sm-6 col-xs-12">
-                                    <label for="ya_identifier"><?php echo $ya_identifier_title; ?></label>
-                                    <input type="text" name="xd_form[ya_identifier]" value="<?php echo isset($xd_form['ya_identifier']) ? $xd_form['ya_identifier'] : ''; ?>" placeholder="<?php echo $ya_identifier_title; ?>" id="ya_identifier" class="form-control mb-15" />
+                                    <div class="d-none hidden">
+                                        <label for="ya_identifier"><?php echo $ya_identifier_title; ?></label>
+                                        <input type="text" name="xd_form[ya_identifier]" value="<?php echo isset($xd_form['ya_identifier']) ? $xd_form['ya_identifier'] : ''; ?>" placeholder="<?php echo $ya_identifier_title; ?>" id="ya_identifier" class="form-control mb-15" />
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">

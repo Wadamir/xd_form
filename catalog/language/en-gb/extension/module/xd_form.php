@@ -1,15 +1,15 @@
 <?php
-$_['button_name']       = 'Request a call back';
-$_['modal_title']       = 'Request a call back';
+$_['form_submit']       = 'Send';
 
 $_['field1_title']      = 'Name';
 $_['field2_title']      = 'Phone';
-$_['field3_title']      = 'Message';
-$_['text_agree']        = 'By clicking "SEND" button, you have read and agree to <a href="#" onclick=\'formOpenInfo(event, "%s");\' class="agree"><b>%s</b></a>';
+$_['field3_title']      = 'Email';
+$_['field4_title']      = 'Message';
+$_['field5_title']      = 'Captcha';
+$_['text_agree']        = 'By clicking "SEND" button, you have read and agree to <a href="#" onclick=\'xdFormOpenInfo(event, "%s");\' class="agree"><b>%s</b></a>';
 
 $_['required_text']     = 'required field';
 $_['success_field']     = '<h3>Thank you!<br />We will contact you as soon as possible.</h3>';
-$_['submit_button']     = 'SEND';
 
 // Errors
 $_['error_required']    = 'Please, fill required fields!';
@@ -24,6 +24,7 @@ $_['spam_protection']   = '<h3>Thank you very much!<br />Your message has been s
 // Text
 $_['text_name']                     = 'Name: ';
 $_['text_phone']                    = 'Phone: ';
+$_['text_email']                    = 'Email: ';
 $_['text_message']                  = 'Message: ';
 $_['text_ip']                       = 'IP-address: ';
 $_['text_forwarded_ip']             = 'Forwarded IP: ';

@@ -1,15 +1,15 @@
 <?php
-$_['button_name']       = 'Обратный звонок';
-$_['modal_title']       = 'Заказ обратного звонка';
+$_['form_submit']      = 'Отправить';
 
 $_['field1_title']      = 'Имя';
 $_['field2_title']      = 'Телефон';
-$_['field3_title']      = 'Сообщение';
-$_['text_agree']        = 'Нажимая кнопку "ОТПРАВИТЬ", Вы соглашаетесь с <a href="#" onclick=\'formOpenInfo(event, "%s");\' class="agree"><b>%s</b></a>';
+$_['field3_title']      = 'Email';
+$_['field4_title']      = 'Сообщение';
+$_['field5_title']      = 'Капча';
+$_['text_agree']        = 'Нажимая кнопку "ОТПРАВИТЬ", Вы соглашаетесь с <a href="#" onclick=\'xdFormOpenInfo(event, "%s");\' class="agree"><b>%s</b></a>';
 
 $_['required_text']     = 'обязательное поле';
 $_['success_field']     = '<h3>Спасибо!<br />Мы свяжемся с Вами в самое ближайшее время.</h4>';
-$_['submit_button']     = 'ОТПРАВИТЬ';
 
 // Errors
 $_['error_required']    = 'Пожалуйста, заполните обязательные поля!';

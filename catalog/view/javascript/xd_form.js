@@ -1,11 +1,11 @@
-function formOpenInfo(e, link) {
+function xdFormOpenInfo(e, link) {
     e.preventDefault();
     e.stopPropagation();
     window.open(link, '_blank');
     return false;
 }
 
-function formFormValidation(formElem) {
+function xdFormFormValidation(formElem) {
     let elements = formElem.querySelectorAll('input.required');
     let telElements = formElem.querySelectorAll('input[type=tel]');
     let errorCounter = 0;
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById('xd_form-form').addEventListener('submit', function (event) {
         event.preventDefault();
 
-        formClickAnalyticsSend?.();
+        xdFormClickAnalyticsSend?.();
 
         let submitBtn = this.querySelector('button[type=submit]');
         let errorElem = document.getElementById('xd_form_error');
@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         let formData = new FormData(this);
 
-        fetch('index.php?route=module/xd_form/submit', {
+        fetch('index.php?route=extension/module/xd_form/submit', {
             method: 'POST',
             body: formData,
         })
@@ -70,6 +70,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.log(json);
                 if (json.error) {
                     if (json.error.input) {
+                        if (json.error.input === 'spam_protection') {
+                            $('#xd_form_success').modal('show');
+                            setTimeout(() => {
+                                $('#xd_form_success').modal('hide');
+                                submitBtn.disabled = false;
+                                submitBtn.classList.remove('disabled');
+                                window.location.reload();
+                            }, 5000);
+                            return false;
+                        }
                         let input = document.getElementById(json.error.input);
                         if (!input) {
                             return false;
@@ -86,7 +96,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             setTimeout(() => {
                                 errorElem.textContent = '';
                                 errorElem.classList.add('hidden');
-                            }, 5000);
+                            }, 15000);
                         }
                     }
                     submitBtn.disabled = false;
@@ -96,16 +106,18 @@ document.addEventListener("DOMContentLoaded", function () {
                     errorElem.textContent = '';
                     errorElem.classList.add('hidden');
                     document.getElementById('xd_form-form').reset();
-                    formClickAnalyticsSuccess?.();
+                    xdFormClickAnalyticsSuccess?.();
                     submitBtn.disabled = false;
                     if (json.redirect) {
                         window.location.href = json.redirect;
                     } else {
                         submitBtn.classList.remove('disabled');
-                        $('#xd_form_modal').modal('hide');
+                        // $('#xd_form_modal').modal('hide');
                         $('#xd_form_success').modal('show');
                         setTimeout(() => {
                             $('#xd_form_success').modal('hide');
+                            // Reload the page after 5 seconds
+                            window.location.reload();
                         }, 5000);
                     }
                 }

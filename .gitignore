@@ -96,9 +96,5 @@
 !/catalog/view/javascript/sourcebuster.min.js
 !/catalog/view/javascript/jquery.mask.min.js
 
-/system/*
-!/system/
-!/system/xd_form.ocmod.xml
-
 /image/
 /install/

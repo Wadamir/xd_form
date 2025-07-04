@@ -6,46 +6,61 @@ class ControllerExtensionModuleXDForm extends Controller
     private $field1_status = null;
     private $field2_status = null;
     private $field3_status = null;
+    private $field4_status = null;
     private $captcha = null;
     private $spam_protection = null;
     private $exan_status = null;
 
     public function index()
     {
+        $this->load->language('extension/module/xd_form');
+        $data['heading_title'] = $this->language->get('heading_title');
+
         $data = [];
-        $xd_form_setting = $this->config->get('xd_form');
+        $xd_form_setting = $this->config->get('xd_form_settings');
+        // var_dump($xd_form_setting);
         $data['status'] = false;
         if ($xd_form_setting) {
             $data['status'] = boolval($xd_form_setting['module_xd_form_status']);
+            // var_dump($data['status']);
             if ($data['status']) {
+                // Link to styles & scripts
+                $this->document->addScript('/catalog/view/javascript/xd_form.js');
+                $this->document->addScript('/catalog/view/javascript/jquery.mask.min.js');
+                $this->document->addScript('/catalog/view/javascript/sourcebuster.min.js');
+                $this->document->addStyle('/catalog/view/theme/default/stylesheet/xd_form.css');
+
                 // Get language data
-                $this->load->language('module/xd_form');
-                $data['modal_title'] = $this->language->get('modal_title');
                 $data['required_text'] = $this->language->get('required_text');
                 $data['error_required'] = $this->language->get('error_required');
                 $data['error_sending'] = $this->language->get('error_sending');
                 $data['submit_button'] = $this->language->get('submit_button');
 
+                // var_dump($xd_form_setting['form_subtitle']);
+
                 $current_language_id = $this->config->get('config_language_id');
-                $data['button_name'] = $xd_form_setting['button_name'][$current_language_id];
-                if ($data['button_name'] == '') {
-                    $data['button_name'] = $this->language->get('button_name');
-                }
-                $data['success_field'] = html_entity_decode($xd_form_setting['success_field'][$current_language_id], ENT_QUOTES, 'UTF-8');
-                if ($data['success_field'] == '') {
-                    $data['success_field'] = $this->language->get('success_field');
-                }
+                $data['form_title'] = (isset($xd_form_setting['form_title'][$current_language_id])) ? $xd_form_setting['form_title'][$current_language_id] : '';
+                $data['form_subtitle'] = (isset($xd_form_setting['form_subtitle'][$current_language_id])) ? html_entity_decode($xd_form_setting['form_subtitle'][$current_language_id], ENT_QUOTES, 'UTF-8') : '';
+                $data['form_submit'] = (isset($xd_form_setting['form_submit'][$current_language_id])) ? $xd_form_setting['form_submit'][$current_language_id] : '';
+
+                $data['success_field'] = (isset($xd_form_setting['success_field'][$current_language_id])) ? html_entity_decode($xd_form_setting['success_field'][$current_language_id], ENT_QUOTES, 'UTF-8') : $this->language->get('success_field');
 
                 // Fields
                 $data['field1_status'] = intval($xd_form_setting['field1_status']); // Name status
                 $this->field1_status = $data['field1_status'];
                 $data['field1_title'] = $this->language->get('field1_title'); // Name title
+
                 $data['field2_status'] = intval($xd_form_setting['field2_status']); // Phone status
                 $this->field2_status = $data['field2_status'];
                 $data['field2_title'] = $this->language->get('field2_title'); // Phone title
-                $data['field3_status'] = intval($xd_form_setting['field3_status']); // Message status
+
+                $data['field3_status'] = intval($xd_form_setting['field3_status']); // Email status
                 $this->field3_status = $data['field3_status'];
-                $data['field3_title'] = $this->language->get('field3_title'); // Message title
+                $data['field3_title'] = $this->language->get('field3_title'); // Email title
+
+                $data['field4_status'] = intval($xd_form_setting['field4_status']); // Message status
+                $this->field4_status = $data['field4_status'];
+                $data['field4_title'] = $this->language->get('field4_title'); // Message title
 
                 // Custom field
                 $data['field_custom_type'] = (isset($xd_form_setting['field_custom_type'])) ? $xd_form_setting['field_custom_type'] : '';
@@ -57,7 +72,7 @@ class ControllerExtensionModuleXDForm extends Controller
                 $this->captcha = $data['captcha'];
                 $data['captcha_class'] = $xd_form_setting['captcha'];
                 if ($this->config->get($data['captcha'] . '_status')) {
-                    $data['captcha'] = $this->load->controller('captcha/' . $data['captcha'], $this->error);
+                    $data['captcha'] = $this->load->controller('extension/captcha/' . $data['captcha'], $this->error);
                 }
 
                 // Agreement
@@ -81,9 +96,10 @@ class ControllerExtensionModuleXDForm extends Controller
                 $data['success_utm'] = (isset($xd_form_setting['success_utm'])) ? 'utm_source=' . trim($xd_form_setting['success_utm']) : 'utm_source=xd_form';
 
                 // Styles
-                $data['button_color'] = (isset($xd_form_setting['button_color'])) ? $xd_form_setting['button_color'] : '';
-                $data['button_position'] = (isset($xd_form_setting['button_position'])) ? $xd_form_setting['button_position'] : 'bottom_left';
-                $data['modal_style'] = (isset($xd_form_setting['modal_style'])) ? $xd_form_setting['modal_style'] : 'default';
+                // $data['button_color'] = (isset($xd_form_setting['button_color'])) ? $xd_form_setting['button_color'] : '';
+                // $data['button_position'] = (isset($xd_form_setting['button_position'])) ? $xd_form_setting['button_position'] : 'bottom_left';
+                // $data['modal_style'] = (isset($xd_form_setting['modal_style'])) ? $xd_form_setting['modal_style'] : 'default';
+                $data['modal_style'] = 'default'; // Default style
 
                 // SourceBuster Analytics
                 $data['exan_status'] = (isset($xd_form_setting['exan_status'])) ? boolval($xd_form_setting['exan_status']) : false;
@@ -104,15 +120,15 @@ class ControllerExtensionModuleXDForm extends Controller
                 $data['ya_identifier_success']      = (isset($xd_form_setting['ya_identifier_success'])) ? trim($xd_form_setting['ya_identifier_success']) : '';
             }
         }
-        return $this->load->view('default/template/module/xd_form.tpl', $data);
+        return $this->load->view('extension/module/xd_form', $data);
     }
 
     public function submit()
     {
         if ($this->request->server['REQUEST_METHOD'] == 'POST' && $this->validate()) {
 
-            $xd_form_setting = $this->config->get('xd_form');
-            $this->load->language('module/xd_form');
+            $xd_form_setting = $this->config->get('xd_form_settings');
+            $this->load->language('extension/module/xd_form');
             $json = array();
             $mail_text = '';
 
@@ -136,7 +152,7 @@ class ControllerExtensionModuleXDForm extends Controller
             if (isset($this->request->post['xd_form_custom'])) {
                 $xd_form_custom = $this->request->post['xd_form_custom'];
                 $current_language_id = $this->config->get('config_language_id');
-                $xd_form_custom_title = $this->config->get('xd_form')['field_custom_title'][$current_language_id];
+                $xd_form_custom_title = $this->config->get('xd_form_settings')['field_custom_title'][$current_language_id];
                 $mail_text .= $xd_form_custom_title . ': ' . $xd_form_custom . " \r\n";
             }
 
@@ -309,12 +325,12 @@ class ControllerExtensionModuleXDForm extends Controller
 
     protected function validate()
     {
-        $xd_form_setting = $this->config->get('xd_form');
-        $this->load->language('module/xd_form');
+        $xd_form_setting = $this->config->get('xd_form_settings');
+        $this->load->language('extension/module/xd_form');
 
         // Validate spam protection
         $this->spam_protection = boolval($xd_form_setting['spam_protection']);
-        if ($this->spam_protection && (strlen(trim($this->request->post['xd_form_email'])) > 0 || strlen(trim($this->request->post['xd_form_surname'])) > 0)) {
+        if ($this->spam_protection && strlen(trim($this->request->post['xd_form_surname'])) > 0) {
             $this->error['message'] = $this->language->get('spam_protection');
             $this->error['input'] = 'spam_protection';
             return false;
@@ -354,9 +370,24 @@ class ControllerExtensionModuleXDForm extends Controller
             }
         }
 
-        // Validate message
+        // Validate email
         $this->field3_status = intval($xd_form_setting['field3_status']);
         if ($this->field3_status === 2) {
+            if (strlen($this->request->post['xd_form_email']) < 1 || strlen($this->request->post['xd_form_email']) > 96) {
+                $this->error['message'] = $this->language->get('error_email');
+                $this->error['input'] = 'xd_form_email';
+                return false;
+            }
+            if (!filter_var($this->request->post['xd_form_email'], FILTER_VALIDATE_EMAIL)) {
+                $this->error['message'] = $this->language->get('error_email');
+                $this->error['input'] = 'xd_form_email';
+                return false;
+            }
+        }
+
+        // Validate message
+        $this->field4_status = intval($xd_form_setting['field4_status']);
+        if ($this->field4_status === 2) {
             if (strlen($this->request->post['xd_form_message']) < 1 || strlen($this->request->post['xd_form_message']) > 9000) {
                 $this->error['message'] = $this->language->get('error_message');
                 $this->error['input'] = 'xd_form_message';
@@ -379,7 +410,7 @@ class ControllerExtensionModuleXDForm extends Controller
         $data['captcha'] = (isset($xd_form_setting['captcha'])) ? $xd_form_setting['captcha'] : 0; // Captcha
         $this->captcha = $data['captcha'];
         if ($this->captcha && $this->config->get($this->captcha . '_status')) {
-            $captcha = $this->load->controller('captcha/' . $this->captcha . '/validate');
+            $captcha = $this->load->controller('extension/captcha/' . $this->captcha . '/validate');
             if ($captcha) {
                 $this->error['message'] = $this->language->get('error_captcha');
                 $this->error['input'] = 'xd_form_captcha';

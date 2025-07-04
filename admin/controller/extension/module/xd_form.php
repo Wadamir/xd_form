@@ -4,22 +4,38 @@ class ControllerExtensionModuleXDForm extends Controller
     private $error = array();
     public function index()
     {
-        $this->load->language('module/xd_form');
+        $this->load->language('extension/module/xd_form');
+
         $this->document->setTitle($this->language->get('heading_name'));
+
         $this->document->addStyle('view/stylesheet/xd_form.css');
         $this->document->addStyle('view/stylesheet/css/colorpicker.css');
         $this->document->addScript('view/javascript/jquery/colorpicker.js');
+
         $this->load->model('setting/setting');
+
         if (($this->request->server['REQUEST_METHOD'] === 'POST') && $this->validate()) {
-            $this->model_setting_setting->editSetting('xd_form', $this->request->post);
+            // Set module status = 1
+            if (isset($this->request->post['xd_form']) && isset($this->request->post['xd_form']['module_xd_form_status']) && $this->request->post['xd_form']['module_xd_form_status'] == 1) {
+                $this->model_setting_setting->editSetting('xd_form', array(
+                    'xd_form_status' => 1,
+                    'xd_form_settings' => $this->request->post['xd_form'],
+                ));
+            } else {
+                $this->model_setting_setting->editSetting('xd_form', array(
+                    'xd_form_status' => 0,
+                    'xd_form_settings' => $this->request->post['xd_form'],
+                ));
+            }
+
             $this->session->data['success'] = $this->language->get('text_success');
 
             // Save & Stay button
             if (isset($this->request->post['save_and_stay']) && $this->request->post['save_and_stay'] == 1) {
-                $this->response->redirect($this->url->link('module/xd_form', 'token=' . $this->session->data['token'], 'SSL'));
+                $this->response->redirect($this->url->link('extension/module/xd_form', 'token=' . $this->session->data['token'], 'SSL'));
             }
 
-            $this->response->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'));
+            $this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'], true));
         }
         // Heading
         $data['heading_title'] = $this->language->get('heading_title');
@@ -43,6 +59,7 @@ class ControllerExtensionModuleXDForm extends Controller
         $data['field2_title'] = $this->language->get('field2_title');
         $data['field3_title'] = $this->language->get('field3_title');
         $data['field4_title'] = $this->language->get('field4_title');
+        $data['field5_title'] = $this->language->get('field5_title');
         $data['agree_title'] = $this->language->get('agree_title');
         $data['field_required'] = $this->language->get('field_required');
         // Custom field
@@ -61,11 +78,13 @@ class ControllerExtensionModuleXDForm extends Controller
         // Spam protection
         $data['entry_spam_protection'] = $this->language->get('entry_spam_protection');
         // Entry
-        $data['entry_button_name'] = $this->language->get('entry_button_name');
+        $data['entry_form_title'] = $this->language->get('entry_form_title');
+        $data['entry_form_subtitle'] = $this->language->get('entry_form_subtitle');
+        $data['entry_form_submit'] = $this->language->get('entry_form_submit');
         $data['entry_status'] = $this->language->get('entry_status');
         $data['entry_redirect'] = $this->language->get('entry_redirect');
         $data['entry_success_field'] = $this->language->get('entry_success_field');
-        $data['success_field_tooltip'] = htmlspecialchars($this->language->get('success_field_tooltip'));
+        $data['entry_html_tags'] = htmlspecialchars($this->language->get('entry_html_tags'));
         // Success
         $data['entry_success_type'] = $this->language->get('entry_success_type');
         $data['entry_success_utm'] = $this->language->get('entry_success_utm');
@@ -143,14 +162,14 @@ class ControllerExtensionModuleXDForm extends Controller
             'text' => $this->language->get('heading_name'),
             'href' => $this->url->link('module/xd_form', 'token=' . $this->session->data['token'], 'SSL')
         );
-        $data['action'] = $this->url->link('module/xd_form', 'token=' . $this->session->data['token'], 'SSL');
-        $data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
+        $data['action'] = $this->url->link('extension/module/xd_form', 'token=' . $this->session->data['token'], 'SSL');
+        $data['cancel'] = $this->url->link('extension/extension', 'token=' . $this->session->data['token'], 'SSL');
 
         // New var
         if (isset($this->request->post['xd_form'])) {
             $data['xd_form'] = $this->request->post['xd_form'];
         } else {
-            $data['xd_form'] = $this->config->get('xd_form');
+            $data['xd_form'] = $this->config->get('xd_form_settings');
         }
 
         $this->load->model('localisation/language');
@@ -204,11 +223,12 @@ class ControllerExtensionModuleXDForm extends Controller
         $extensions = $this->model_extension_extension->getInstalled('captcha');
 
         foreach ($extensions as $code) {
-            $this->load->language('captcha/' . $code);
+            $captcha_lang = $this->load->language('extension/captcha/' . $code);
+            // var_dump($captcha_lang);
 
             if ($this->config->has($code . '_status')) {
                 $data['captchas'][] = array(
-                    'text'  => $this->language->get('heading_title'),
+                    'text'  => $captcha_lang['heading_title'],
                     'value' => $code
                 );
             }
@@ -272,11 +292,12 @@ class ControllerExtensionModuleXDForm extends Controller
         $data['header'] = $this->load->controller('common/header');
         $data['column_left'] = $this->load->controller('common/column_left');
         $data['footer'] = $this->load->controller('common/footer');
-        $this->response->setOutput($this->load->view('module/xd_form.tpl', $data));
+
+        $this->response->setOutput($this->load->view('extension/module/xd_form', $data));
     }
     protected function validate()
     {
-        if (!$this->user->hasPermission('modify', 'module/xd_form')) {
+        if (!$this->user->hasPermission('modify', 'extension/module/xd_form')) {
             $this->error['warning'] = $this->language->get('error_permission');
         }
         return !$this->error;

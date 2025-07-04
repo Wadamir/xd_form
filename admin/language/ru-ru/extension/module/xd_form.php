@@ -25,7 +25,9 @@ $_['text_tab_help']         = 'Помощь';
 // Fields
 $_['field1_title']          = 'Имя';
 $_['field2_title']          = 'Телефон';
-$_['field3_title']          = 'Сообщение';
+$_['field3_title']          = 'Email';
+$_['field4_title']          = 'Сообщение';
+$_['field5_title']          = 'Капча';
 $_['agree_title']           = 'Требовать согласие с ';
 $_['field_required']        = 'Обязательное поле';
 
@@ -48,10 +50,12 @@ $_['value_validation_type2']        = '+38(000)000-00-00';
 $_['entry_spam_protection']        = 'Дополнительная защита от спама';
 
 // Entry
-$_['entry_button_name']             = 'Текст на кнопке (не виден на стандартной кнопке)';
+$_['entry_form_title']               = 'Заголовок формы';
+$_['entry_form_subtitle']            = 'Подзаголовок формы';
+$_['entry_form_submit']              = 'Текст кнопки отправки формы';
 $_['entry_status']                  = 'Статус модуля XD Form';
 $_['entry_success_field']           = 'Текст успешной отправки во всплывающем окне';
-$_['success_field_tooltip']         = 'Допустимо использовать html-теги';
+$_['entry_html_tags']         = 'допустимо использовать html-теги';
 
 // Success
 $_['entry_success_type']            = 'После успешной отправки запроса';
