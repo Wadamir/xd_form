@@ -36,6 +36,9 @@
 
 /admin/view/javascript/*
 !/admin/view/javascript/
+!/admin/view/javascript/bootstrap-colorpicker.js
+!/admin/view/javascript/bootstrap-colorpicker.min.js
+
 /admin/view/javascript/jquery/*
 !/admin/view/javascript/jquery/
 !/admin/view/javascript/jquery/colorpicker.js
@@ -53,6 +56,11 @@
 !/admin/view/stylesheet/colorpicker.css
 !/admin/view/stylesheet/mini_phone_button.png
 !/admin/view/stylesheet/xd_form.css
+
+!/admin/view/stylesheet/bootstrap-colorpicker.min.css
+!/admin/view/stylesheet/blank.gif
+!/admin/view/stylesheet/images
+!/admin/view/stylesheet/images/*
 
 /catalog/*
 !/catalog/
