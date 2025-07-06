@@ -5,12 +5,17 @@ class ControllerExtensionModuleXDForm extends Controller
     public function index()
     {
         $this->load->language('extension/module/xd_form');
+        // Add all loaded language variables to $data
+        $data = array();
+        $data += $this->language->all();
 
         $this->document->setTitle($this->language->get('heading_name'));
 
         $this->document->addStyle('view/stylesheet/xd_form.css');
-        $this->document->addStyle('view/stylesheet/css/colorpicker.css');
-        $this->document->addScript('view/javascript/jquery/colorpicker.js');
+        $this->document->addScript('view/javascript/bootstrap-colorpicker.js');
+        $this->document->addStyle('view/stylesheet/bootstrap-colorpicker.min.css');
+        // $this->document->addStyle('view/stylesheet/colorpicker.css');
+        // $this->document->addScript('view/javascript/jquery/colorpicker.js');
 
         $this->load->model('setting/setting');
 
@@ -37,103 +42,106 @@ class ControllerExtensionModuleXDForm extends Controller
 
             $this->response->redirect($this->url->link('extension/extension', 'token=' . $this->session->data['token'], true));
         }
-        // Heading
-        $data['heading_title'] = $this->language->get('heading_title');
-        $data['heading_name'] = $this->language->get('heading_name');
-        // Text
-        $data['text_edit'] = $this->language->get('text_edit');
-        $data['text_enabled'] = $this->language->get('text_enabled');
-        $data['text_disabled'] = $this->language->get('text_disabled');
-        //Buttons
-        $data['button_save'] = $this->language->get('button_save');
-        $data['button_apply'] = $this->language->get('button_apply');
-        $data['button_cancel'] = $this->language->get('button_cancel');
-        // Nav tabs
-        $data['settings_main'] = $this->language->get('settings_main');
-        $data['settings_style'] = $this->language->get('settings_style');
-        $data['settings_sms'] = $this->language->get('settings_sms');
-        $data['settings_analytics'] = $this->language->get('settings_analytics');
-        $data['text_tab_help'] = $this->language->get('text_tab_help');
-        // Fields
-        $data['field1_title'] = $this->language->get('field1_title');
-        $data['field2_title'] = $this->language->get('field2_title');
-        $data['field3_title'] = $this->language->get('field3_title');
-        $data['field4_title'] = $this->language->get('field4_title');
-        $data['field5_title'] = $this->language->get('field5_title');
-        $data['agree_title'] = $this->language->get('agree_title');
-        $data['field_required'] = $this->language->get('field_required');
-        // Custom field
-        $data['field_custom_title_entry'] = $this->language->get('field_custom_title_entry');
-        $data['field_custom_status_entry'] = $this->language->get('field_custom_status_entry');
-        $data['field_custom_type_entry'] = $this->language->get('field_custom_type_entry');
-        $data['field_custom_type_text'] = $this->language->get('field_custom_type_text');
-        $data['field_custom_type_textarea'] = $this->language->get('field_custom_type_textarea');
-        // Phone validation
-        $data['entry_validation_type'] = $this->language->get('entry_validation_type');
-        $data['text_validation_type0'] = $this->language->get('text_validation_type0');
-        $data['text_validation_type1'] = $this->language->get('text_validation_type1');
-        $data['text_validation_type2'] = $this->language->get('text_validation_type2');
-        $data['value_validation_type1'] = $this->language->get('value_validation_type1');
-        $data['value_validation_type2'] = $this->language->get('value_validation_type2');
-        // Spam protection
-        $data['entry_spam_protection'] = $this->language->get('entry_spam_protection');
-        // Entry
-        $data['entry_form_title'] = $this->language->get('entry_form_title');
-        $data['entry_form_subtitle'] = $this->language->get('entry_form_subtitle');
-        $data['entry_form_submit'] = $this->language->get('entry_form_submit');
-        $data['entry_status'] = $this->language->get('entry_status');
-        $data['entry_redirect'] = $this->language->get('entry_redirect');
-        $data['entry_success_field'] = $this->language->get('entry_success_field');
-        $data['entry_html_tags'] = htmlspecialchars($this->language->get('entry_html_tags'));
-        // Success
-        $data['entry_success_type'] = $this->language->get('entry_success_type');
-        $data['entry_success_utm'] = $this->language->get('entry_success_utm');
-        $data['success_type0'] = $this->language->get('success_type0');
-        $data['success_type1'] = $this->language->get('success_type1');
-        $data['success_type_tooltip'] = $this->language->get('success_type_tooltip');
+        // // Heading
+        // $data['heading_title'] = $this->language->get('heading_title');
+        // $data['heading_name'] = $this->language->get('heading_name');
+        // // Text
+        // $data['text_edit'] = $this->language->get('text_edit');
+        // $data['text_enabled'] = $this->language->get('text_enabled');
+        // $data['text_disabled'] = $this->language->get('text_disabled');
+        // //Buttons
+        // $data['button_save'] = $this->language->get('button_save');
+        // $data['button_apply'] = $this->language->get('button_apply');
+        // $data['button_cancel'] = $this->language->get('button_cancel');
+        // // Nav tabs
+        // $data['settings_main'] = $this->language->get('settings_main');
+        // $data['settings_style'] = $this->language->get('settings_style');
+        // $data['settings_sms'] = $this->language->get('settings_sms');
+        // $data['settings_analytics'] = $this->language->get('settings_analytics');
+        // $data['text_tab_help'] = $this->language->get('text_tab_help');
+        // // Fields
+        // $data['field1_title'] = $this->language->get('field1_title');
+        // $data['field2_title'] = $this->language->get('field2_title');
+        // $data['field3_title'] = $this->language->get('field3_title');
+        // $data['field4_title'] = $this->language->get('field4_title');
+        // $data['field5_title'] = $this->language->get('field5_title');
+        // $data['agree_title'] = $this->language->get('agree_title');
+        // $data['field_required'] = $this->language->get('field_required');
+        // // Custom field
+        // $data['field_custom_title_entry'] = $this->language->get('field_custom_title_entry');
+        // $data['field_custom_status_entry'] = $this->language->get('field_custom_status_entry');
+        // $data['field_custom_type_entry'] = $this->language->get('field_custom_type_entry');
+        // $data['field_custom_type_text'] = $this->language->get('field_custom_type_text');
+        // $data['field_custom_type_textarea'] = $this->language->get('field_custom_type_textarea');
+        // // Phone validation
+        // $data['entry_validation_type'] = $this->language->get('entry_validation_type');
+        // $data['text_validation_type0'] = $this->language->get('text_validation_type0');
+        // $data['text_validation_type1'] = $this->language->get('text_validation_type1');
+        // $data['text_validation_type2'] = $this->language->get('text_validation_type2');
+        // $data['value_validation_type1'] = $this->language->get('value_validation_type1');
+        // $data['value_validation_type2'] = $this->language->get('value_validation_type2');
+        // // Spam protection
+        // $data['entry_spam_protection'] = $this->language->get('entry_spam_protection');
+        // // Entry
+        // $data['entry_form_title'] = $this->language->get('entry_form_title');
+        // $data['entry_form_subtitle'] = $this->language->get('entry_form_subtitle');
+        // $data['entry_form_submit'] = $this->language->get('entry_form_submit');
+        // $data['entry_form_bottom'] = $this->language->get('entry_form_bottom');
+        // $data['entry_status'] = $this->language->get('entry_status');
+        // $data['entry_redirect'] = $this->language->get('entry_redirect');
+        // $data['entry_success_field'] = $this->language->get('entry_success_field');
+        // $data['entry_html_tags'] = htmlspecialchars($this->language->get('entry_html_tags'));
+        // // Success
+        // $data['entry_success_type'] = $this->language->get('entry_success_type');
+        // $data['entry_success_utm'] = $this->language->get('entry_success_utm');
+        // $data['success_type0'] = $this->language->get('success_type0');
+        // $data['success_type1'] = $this->language->get('success_type1');
+        // $data['success_type_tooltip'] = $this->language->get('success_type_tooltip');
 
-        // Tab Styles
-        $data['tab_styles'] = $this->language->get('tab_styles');
-        $data['tab_styles_button_color'] = $this->language->get('tab_styles_button_color');
-        $data['tab_styles_button_position'] = $this->language->get('tab_styles_button_position');
-        $data['tab_styles_button_position_hide'] = $this->language->get('tab_styles_button_position_hide');
-        $data['tab_styles_button_position_top_left'] = $this->language->get('tab_styles_button_position_top_left');
-        $data['tab_styles_button_position_top_right'] = $this->language->get('tab_styles_button_position_top_right');
-        $data['tab_styles_button_position_bottom_left'] = $this->language->get('tab_styles_button_position_bottom_left');
-        $data['tab_styles_button_position_bottom_right'] = $this->language->get('tab_styles_button_position_bottom_right');
-        $data['tab_styles_modal_style'] = $this->language->get('tab_styles_modal_style');
-        $data['tab_styles_modal_style_default'] = $this->language->get('tab_styles_modal_style_default');
-        $data['tab_styles_modal_style_custom'] = $this->language->get('tab_styles_modal_style_custom');
-
-
-
-        // Extended analytics
-        $data['exan_form_title'] = $this->language->get('exan_form_title');
-        $data['exan_status_title'] = $this->language->get('exan_status_title');
-
-        // Yandex
-        $data['ya_form_title'] = $this->language->get('ya_form_title');
-        $data['ya_counter_title'] = $this->language->get('ya_counter_title');
-        $data['ya_identifier_title'] = $this->language->get('ya_identifier_title');
-        $data['ya_identifier_send_title'] = $this->language->get('ya_identifier_send_title');
-        $data['ya_identifier_success_title'] = $this->language->get('ya_identifier_success_title');
-        $data['ya_target_status_title'] = $this->language->get('ya_target_status_title');
-
-        // Google
-        $data['google_form_title'] = $this->language->get('google_form_title');
-        $data['google_category_btn_title'] = $this->language->get('google_category_btn_title');
-        $data['google_action_btn_title'] = $this->language->get('google_action_btn_title');
-        $data['google_category_send_title'] = $this->language->get('google_category_send_title');
-        $data['google_action_send_title'] = $this->language->get('google_action_send_title');
-        $data['google_category_success_title'] = $this->language->get('google_category_success_title');
-        $data['google_action_success_title'] = $this->language->get('google_action_success_title');
-        $data['google_target_status_title'] = $this->language->get('google_target_status_title');
+        // // Tab Styles
+        // $data['tab_styles'] = $this->language->get('tab_styles');
+        // $data['tab_styles_button_color'] = $this->language->get('tab_styles_button_color');
+        // $data['tab_styles_button_position'] = $this->language->get('tab_styles_button_position');
+        // $data['tab_styles_button_position_hide'] = $this->language->get('tab_styles_button_position_hide');
+        // $data['tab_styles_button_position_top_left'] = $this->language->get('tab_styles_button_position_top_left');
+        // $data['tab_styles_button_position_top_right'] = $this->language->get('tab_styles_button_position_top_right');
+        // $data['tab_styles_button_position_bottom_left'] = $this->language->get('tab_styles_button_position_bottom_left');
+        // $data['tab_styles_button_position_bottom_right'] = $this->language->get('tab_styles_button_position_bottom_right');
+        // $data['tab_styles_modal_style'] = $this->language->get('tab_styles_modal_style');
+        // $data['tab_styles_modal_style_default'] = $this->language->get('tab_styles_modal_style_default');
+        // $data['tab_styles_modal_style_custom'] = $this->language->get('tab_styles_modal_style_custom');
+        // $data['entry_fullwidth'] = $this->language->get('entry_fullwidth');
+        // $data['entry_background_color_status'] = $this->language->get('entry_background_color_status');
+        // $data['entry_background_image'] = $this->language->get('entry_background_image');
 
 
-        // Help tab
-        $data['text_tab_help'] = $this->language->get('text_tab_help');
-        $data['text_tab_help_title'] = $this->language->get('text_tab_help_title');
-        $data['text_help'] = $this->language->get('text_help');
+        // // Extended analytics
+        // $data['exan_form_title'] = $this->language->get('exan_form_title');
+        // $data['exan_status_title'] = $this->language->get('exan_status_title');
+
+        // // Yandex
+        // $data['ya_form_title'] = $this->language->get('ya_form_title');
+        // $data['ya_counter_title'] = $this->language->get('ya_counter_title');
+        // $data['ya_identifier_title'] = $this->language->get('ya_identifier_title');
+        // $data['ya_identifier_send_title'] = $this->language->get('ya_identifier_send_title');
+        // $data['ya_identifier_success_title'] = $this->language->get('ya_identifier_success_title');
+        // $data['ya_target_status_title'] = $this->language->get('ya_target_status_title');
+
+        // // Google
+        // $data['google_form_title'] = $this->language->get('google_form_title');
+        // $data['google_category_btn_title'] = $this->language->get('google_category_btn_title');
+        // $data['google_action_btn_title'] = $this->language->get('google_action_btn_title');
+        // $data['google_category_send_title'] = $this->language->get('google_category_send_title');
+        // $data['google_action_send_title'] = $this->language->get('google_action_send_title');
+        // $data['google_category_success_title'] = $this->language->get('google_category_success_title');
+        // $data['google_action_success_title'] = $this->language->get('google_action_success_title');
+        // $data['google_target_status_title'] = $this->language->get('google_target_status_title');
+
+
+        // // Help tab
+        // $data['text_tab_help'] = $this->language->get('text_tab_help');
+        // $data['text_tab_help_title'] = $this->language->get('text_tab_help_title');
+        // $data['text_help'] = $this->language->get('text_help');
 
 
 
@@ -182,16 +190,16 @@ class ControllerExtensionModuleXDForm extends Controller
                 $data['xd_form']['button_name'][$language['language_id']] = $post_data['button_name'][$language['language_id']];
                 $data['xd_form']['success_field'][$language['language_id']] = $post_data['success_field'][$language['language_id']];
             } else {
-                if (isset($this->config->get('xd_form')['button_name'][$language['language_id']]) && $this->config->get('xd_form')['button_name'][$language['language_id']] != '') {
-                    $data['xd_form']['button_name'][$language['language_id']] = $this->config->get('xd_form')['button_name'][$language['language_id']];
+                if (isset($this->config->get('xd_form_settings')['button_name'][$language['language_id']]) && $this->config->get('xd_form_settings')['button_name'][$language['language_id']] != '') {
+                    $data['xd_form']['button_name'][$language['language_id']] = $this->config->get('xd_form_settings')['button_name'][$language['language_id']];
                 } else {
                     // Set default values
                     if ($language_id == $this->config->get('config_language_id')) {
                         $data['xd_form']['button_name'][$language['language_id']] = $this->language->get('default_button_name');
                     }
                 }
-                if (isset($this->config->get('xd_form')['success_field'][$language['language_id']]) && $this->config->get('xd_form')['success_field'][$language['language_id']] != '') {
-                    $data['xd_form']['success_field'][$language['language_id']] = $this->config->get('xd_form')['success_field'][$language['language_id']];
+                if (isset($this->config->get('xd_form_settings')['success_field'][$language['language_id']]) && $this->config->get('xd_form_settings')['success_field'][$language['language_id']] != '') {
+                    $data['xd_form']['success_field'][$language['language_id']] = $this->config->get('xd_form_settings')['success_field'][$language['language_id']];
                 } else {
                     // Set default values
                     if ($language_id == $this->config->get('config_language_id')) {
@@ -201,6 +209,17 @@ class ControllerExtensionModuleXDForm extends Controller
             }
         }
 
+        // Images
+        $this->load->model('tool/image');
+
+        // Set default value for block bg img
+        if (isset($this->request->post['xd_form']['box_bg_img']) && is_file(DIR_IMAGE . $this->request->post['xd_form']['box_bg_img'])) {
+            $data['box_bg_thumb'] = $this->model_tool_image->resize($this->request->post['xd_form']['box_bg_img'], 100, 100);
+        } elseif (isset($this->config->get('xd_form_settings')['box_bg_img']) && $this->config->get('xd_form_settings')['box_bg_img'] && is_file(DIR_IMAGE . $this->config->get('xd_form_settings')['box_bg_img'])) {
+            $data['box_bg_thumb'] = $this->model_tool_image->resize($this->config->get('xd_form_settings')['box_bg_img'], 100, 100);
+        } else {
+            $data['box_bg_thumb'] = $this->model_tool_image->resize('no_image.png', 100, 100);
+        }
 
 
         // Set default values

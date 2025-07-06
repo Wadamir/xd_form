@@ -33,6 +33,13 @@
 
 /admin/view/*
 !/admin/view/
+
+/admin/view/javascript/*
+!/admin/view/javascript/
+/admin/view/javascript/jquery/*
+!/admin/view/javascript/jquery/
+!/admin/view/javascript/jquery/colorpicker.js
+
 /admin/view/template/*
 !/admin/view/template/
 /admin/view/template/extension/*
@@ -43,8 +50,9 @@
 
 /admin/view/stylesheet/*
 !/admin/view/stylesheet/
-!/admin/view/stylesheet/xd_form.css
+!/admin/view/stylesheet/colorpicker.css
 !/admin/view/stylesheet/mini_phone_button.png
+!/admin/view/stylesheet/xd_form.css
 
 /catalog/*
 !/catalog/

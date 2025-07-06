@@ -25,7 +25,7 @@
             <?php } ?>
             <ul class="nav nav-tabs mb-0">
                 <li class="active"><a href="#settings_main" data-toggle="tab"><?php echo $settings_main; ?></a></li>
-                <li class="d-none hidden"><a href="#settings_style" data-toggle="tab"><?php echo $settings_style; ?></a></li>
+                <li><a href="#settings_style" data-toggle="tab"><?php echo $settings_style; ?></a></li>
                 <li class="hidden"><a href="#settings_sms" data-toggle="tab"><?php echo $settings_sms; ?></a></li>
                 <li><a href="#settings_analytics" data-toggle="tab"><?php echo $settings_analytics; ?></a></li>
                 <li><a href="#text_tab_help" data-toggle="tab"><?php echo $text_tab_help; ?></a></li>
@@ -68,6 +68,14 @@
                                     <?php } ?>
                                 </div>
                                 <div class="col-lg-6 col-xs-12">
+                                    <label class="control-label mb-10"><?php echo $entry_form_bottom; ?> (<?php echo $entry_html_tags; ?>)</label>
+                                    <?php foreach ($languages as $language) { ?>
+                                        <?php $language_id = $language['language_id']; ?>
+                                        <div class="input-group mb-15">
+                                            <span class="input-group-addon"><img src="language/<?php echo $language['code']; ?>/<?php echo $language['code']; ?>.png" title="<?php echo $language['name']; ?>" /></span>
+                                            <input type="text" name="xd_form[form_bottom][<?php echo $language_id; ?>]" placeholder="<?php echo $entry_form_bottom; ?>" value="<?php echo isset($xd_form['form_bottom'][$language_id]) ? $xd_form['form_bottom'][$language_id] : ''; ?>" class="form-control" />
+                                        </div>
+                                    <?php } ?>
                                 </div>
                             </div>
                             <div class="row pt-15" style="border-top: 1px solid #e8e8e8;">
@@ -320,50 +328,249 @@
                         </div>
                     </div>
                 </div>
-                <div id="settings_style" class="tab-pane fade d-none hidden">
+                <div id="settings_style" class="tab-pane fade">
                     <div class="panel panel-default" style="border-top:0;">
-                        <div class="panel-heading hidden">
-                            <h2><?php echo $tab_styles; ?></h2>
-                        </div>
                         <div class="panel-body">
-                            <div class="row">
-                                <div class="col-lg-6 col-xs-12">
-                                    <label class="control-label mb-10"><?php echo $tab_styles_button_color; ?></label>
-                                    <div class="color_input">
-                                        <div class="input-group">
-                                            <span class="input-group-addon" style="border-bottom-right-radius:0; border-top-right-radius:0; padding: 4px 8px;"><i class="fa fa-circle fa-2x fa-fw" aria-hidden="true" style="color:<?php echo $xd_form['button_color']; ?>;"></i></span>
-                                            <input type="text" name="xd_form[button_color]" value="<?php echo isset($xd_form['button_color']) ? $xd_form['button_color'] : ''; ?>" class="form-control col-xs-8" />
+                            <div class="sample">
+                                <h4 class="sample-heading"><?php echo $sample_layout_example ?></h4>
+                                <div class="page"><small class="browser"><?php echo $sample_browser; ?> </small>
+                                    <div class="block"><small><?php echo $sample_block_area; ?></small>
+                                        <div class="content">
+                                            <div class="form">
+                                                <span class="form-title"><?php echo $sample_form_title; ?></span>
+                                                <span class="form-subtitle"><?php echo $sample_form_subtitle; ?></span>
+                                                <input type="text" class="form-control disabled" disabled />
+                                                <input type="text" class="form-control disabled" disabled />
+                                                <input type="text" class="form-control disabled" disabled />
+                                                <div class="text-center">
+                                                    <button type="submit" class="btn btn-primary disabled"><?php echo $sample_form_submit; ?></button>
+                                                </div>
+                                                <span class="form-bottom"><?php echo $sample_form_bottom; ?></span>
+                                            </div>
+                                            <small><?php echo $sample_content_area; ?></small>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-6 col-xs-12 text-center">
-                                    <a href="#" id="xd_form_phone_button" class="btn btn-link">
-                                        <div class="circlephone circle_color" style="transform-origin: center;background-color:<?php echo isset($xd_form['button_color']) ? $xd_form['button_color'] : ''; ?>;border-color:<?php echo isset($xd_form['button_color']) ? $xd_form['button_color'] : ''; ?>"></div>
-                                        <div class="circle-fill circle_color" style="transform-origin: center;background-color:<?php echo isset($xd_form['button_color']) ? $xd_form['button_color'] : ''; ?>"></div>
-                                        <div class="img-circle circle_color" style="transform-origin: center;background-color:<?php echo isset($xd_form['button_color']) ? $xd_form['button_color'] : ''; ?>">
-                                            <div class="img-circleblock" style="transform-origin: center;">
-                                                <p style="margin:0;">Call me</p>
-                                            </div>
-                                        </div>
-                                    </a>
                                 </div>
                             </div>
-                            <hr class="main" />
-                            <div class="row inline-input-group">
-                                <div class="col-lg-6 col-xs-12">
-                                    <label class="control-label" for="button_position"><?php echo $tab_styles_button_position; ?></label>
-                                    <div class="custom-select">
-                                        <select name="xd_form[button_position]" id="button_position" class="form-control">
-                                            <option value="hide" <?php echo (isset($xd_form['button_position']) && $xd_form['button_position'] === 'hide') ? ' selected' : '' ?>><?php echo $tab_styles_button_position_hide; ?></option>
-                                            <option value="top_left" <?php echo (isset($xd_form['button_position']) && $xd_form['button_position'] === 'top_left') ? ' selected' : '' ?>><?php echo $tab_styles_button_position_top_left; ?></option>
-                                            <option value="top_right" <?php echo (isset($xd_form['button_position']) && $xd_form['button_position'] === 'top_right') ? ' selected' : '' ?>><?php echo $tab_styles_button_position_top_right; ?></option>
-                                            <option value="bottom_left" <?php echo (isset($xd_form['button_position']) && $xd_form['button_position'] === 'bottom_left') ? ' selected' : '' ?>><?php echo $tab_styles_button_position_bottom_left; ?></option>
-                                            <option value="bottom_right" <?php echo (isset($xd_form['button_position']) && $xd_form['button_position'] === 'bottom_right') ? ' selected' : '' ?>><?php echo $tab_styles_button_position_bottom_right; ?></option>
-                                        </select>
+                            <hr class="divider" />
+                            <!-- Block Area -->
+                            <legend><?php echo $sample_block_area; ?></legend>
+                            <div class="row">
+                                <div class="col-lg-4 col-xs-12">
+                                    <fieldset class="checkbox-switcher justify-content-between">
+                                        <span class="checkbox-switcher-title h6"><?php echo $entry_fullwidth; ?></span>
+                                        <div class="form-check-switcher-wrapper switcher-on-off">
+                                            <span class="custom-checkbox-input-switcher-before"><?php echo $text_disabled; ?></span>
+                                            <div class="form-check form-check-inline form-check-switcher">
+                                                <input type="checkbox" name="xd_form[box_fullwidth]" value="1" id="box_fullwidth" class="custom-checkbox-input-switcher" <?php echo (isset($xd_form['box_fullwidth']) && $xd_form['box_fullwidth'] === '1') ? 'checked="checked"' : '' ?> />
+                                                <label class="custom-checkbox-input-switcher-label" for="box_fullwidth"><?php echo $entry_fullwidth; ?></label>
+                                            </div>
+                                            <span class="custom-checkbox-input-switcher-after"><?php echo $text_enabled; ?></span>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="col-lg-8 col-xs-12">
+                                </div>
+                            </div>
+                            <hr class="inner" />
+                            <div class="row">
+                                <div class="col-lg-4 col-xs-12">
+                                    <fieldset class="checkbox-switcher justify-content-between">
+                                        <span class="checkbox-switcher-title h6"><?php echo $entry_background_color_status; ?></span>
+                                        <div class="form-check-switcher-wrapper switcher-on-off">
+                                            <span class="custom-checkbox-input-switcher-before"><?php echo $text_disabled; ?></span>
+                                            <div class="form-check form-check-inline form-check-switcher">
+                                                <input type="checkbox" name="xd_form[box_bg_color_status]" value="1" id="box_bg_color_status" class="custom-checkbox-input-switcher show-child" <?php echo (isset($xd_form['box_bg_color_status']) && $xd_form['box_bg_color_status'] === '1') ? 'checked="checked"' : '' ?> data-child="box_bg_color_wrapper" />
+                                                <label class="custom-checkbox-input-switcher-label" for="box_bg_color_status"><?php echo $entry_background_color_status; ?></label>
+                                            </div>
+                                            <span class="custom-checkbox-input-switcher-after"><?php echo $text_enabled; ?></span>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="col-lg-8 col-xs-12">
+                                    <div id="box_bg_color_wrapper" class="hidden d-none">
+                                        <div class="form-group form-group_colorfield">
+                                            <div class="input-group form-inline colorfield">
+                                                <span class="input-group-addon"><i style="background:<?php echo isset($xd_form['box_bg_color']) ? $xd_form['box_bg_color'] : '#000000'; ?>"></i></span>
+                                                <input class="form-control" name="xd_form[box_bg_color]" value="<?php echo isset($xd_form['box_bg_color']) ? $xd_form['box_bg_color'] : '#000000'; ?>" />
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+                            </div>
+                            <hr class="inner" />
+                            <div class="row">
+                                <div class="col-lg-4 col-xs-12">
+                                    <fieldset class="checkbox-switcher justify-content-between">
+                                        <span class="checkbox-switcher-title h6"><?php echo $entry_background_image; ?></span>
+                                        <div class="form-check-switcher-wrapper switcher-on-off">
+                                            <span class="custom-checkbox-input-switcher-before"><?php echo $text_disabled; ?></span>
+                                            <div class="form-check form-check-inline form-check-switcher">
+                                                <input type="checkbox" name="xd_form[box_bg_img_status]" value="1" id="box_bg_img_status" class="custom-checkbox-input-switcher show-child" <?php echo (isset($xd_form['box_bg_img_status']) && $xd_form['box_bg_img_status'] === '1') ? 'checked="checked"' : '' ?> data-child="box_bg_image_wrapper" />
+                                                <label class="custom-checkbox-input-switcher-label" for="box_bg_img_status"><?php echo $entry_background_image; ?></label>
+                                            </div>
+                                            <span class="custom-checkbox-input-switcher-after"><?php echo $text_enabled; ?></span>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="col-lg-8 col-xs-12">
+                                    <div id="box_bg_image_wrapper" class="hidden d-none form-horizontal">
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label"><?php echo $entry_image ?></label>
+                                            <div class="col-sm-8">
+                                                <a href="" id="thumb-box-bg-img" data-toggle="image" class="img-thumbnail">
+                                                    <img src="<?php echo $box_bg_thumb; ?>" alt="" title="" data-placeholder="<?php echo $placeholder; ?>" />
+                                                </a>
+                                                <input type="hidden" name="xd_form[box_bg_img]" value="<?php echo isset($xd_form['box_bg_img']) ? $xd_form['box_bg_img'] : ''; ?>" id="input-box-bg-img" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label"><?php echo $entry_background_position ?></label>
+                                            <div class="col-sm-8">
+                                                <div class="custom-select">
+                                                    <?php $selected_pos = isset($xd_form['box_bg_img_pos']) ? $xd_form['box_bg_img_pos'] : ''; ?>
+                                                    <select name="xd_form[box_bg_img_pos]" class="form-control">
+                                                        <option value="top left" <?php echo ($selected_pos == 'top left') ? 'selected="selected"' : ''; ?>>top left</option>
+                                                        <option value="top center" <?php echo ($selected_pos == 'top center') ? 'selected="selected"' : ''; ?>>top center</option>
+                                                        <option value="top right" <?php echo ($selected_pos == 'top right') ? 'selected="selected"' : ''; ?>>top right</option>
+                                                        <option value="center left" <?php echo ($selected_pos == 'center left') ? 'selected="selected"' : ''; ?>>center left</option>
+                                                        <option value="center center" <?php echo ($selected_pos == 'center center') ? 'selected="selected"' : ''; ?>>center center</option>
+                                                        <option value="center right" <?php echo ($selected_pos == 'center right') ? 'selected="selected"' : ''; ?>>center right</option>
+                                                        <option value="bottom left" <?php echo ($selected_pos == 'bottom left') ? 'selected="selected"' : ''; ?>>bottom left</option>
+                                                        <option value="bottom center" <?php echo ($selected_pos == 'bottom center') ? 'selected="selected"' : ''; ?>>bottom center</option>
+                                                        <option value="bottom right" <?php echo ($selected_pos == 'bottom right') ? 'selected="selected"' : ''; ?>>bottom right</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label"><?php echo $entry_background_size ?></label>
+                                            <div class="col-sm-8">
+                                                <div class="custom-select">
+                                                    <?php $selected_size = isset($xd_form['box_bg_img_size']) ? $xd_form['box_bg_img_size'] : ''; ?>
+                                                    <select name="xd_form[box_bg_img_size]" class="form-control">
+                                                        <option value="auto" <?php echo ($selected_size == 'auto') ? 'selected="selected"' : ''; ?>>auto</option>
+                                                        <option value="contain" <?php echo ($selected_size == 'contain') ? 'selected="selected"' : ''; ?>>contain</option>
+                                                        <option value="cover" <?php echo ($selected_size == 'cover') ? 'selected="selected"' : ''; ?>>cover</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4 control-label"><?php echo $entry_background_repeat ?></label>
+                                            <div class="col-sm-8">
+                                                <div class="custom-select">
+                                                    <?php $selected_repeat = isset($xd_form['box_bg_img_repeat']) ? $xd_form['box_bg_img_repeat'] : ''; ?>
+                                                    <select name="xd_form[box_bg_img_repeat]" class="form-control">
+                                                        <option value="no-repeat" <?php echo ($selected_repeat == 'no-repeat') ? 'selected="selected"' : ''; ?>>no-repeat</option>
+                                                        <option value="repeat-x" <?php echo ($selected_repeat == 'repeat-x') ? 'selected="selected"' : ''; ?>>repeat-x (-)</option>
+                                                        <option value="repeat-y" <?php echo ($selected_repeat == 'repeat-y') ? 'selected="selected"' : ''; ?>>repeat-y (|)</option>
+                                                        <option value="repeat" <?php echo ($selected_repeat == 'repeat') ? 'selected="selected"' : ''; ?>>repeat</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="inner" />
+                            <div class="row">
+                                <div class="col-lg-4 col-xs-12">
+                                    <fieldset class="checkbox-switcher justify-content-between">
+                                        <span class="checkbox-switcher-title h6"><?php echo $entry_custom_css; ?></span>
+                                        <div class="form-check-switcher-wrapper switcher-on-off">
+                                            <span class="custom-checkbox-input-switcher-before"><?php echo $text_disabled; ?></span>
+                                            <div class="form-check form-check-inline form-check-switcher">
+                                                <input type="checkbox" name="xd_form[box_custom_css_status]" value="1" id="box_custom_css_status" class="custom-checkbox-input-switcher show-child" <?php echo (isset($xd_form['box_custom_css_status']) && $xd_form['box_custom_css_status'] === '1') ? 'checked="checked"' : '' ?> data-child="box_custom_css_wrapper" />
+                                                <label class="custom-checkbox-input-switcher-label" for="box_custom_css_status"><?php echo $entry_custom_css; ?></label>
+                                            </div>
+                                            <span class="custom-checkbox-input-switcher-after"><?php echo $text_enabled; ?></span>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="col-lg-8 col-xs-12">
+                                    <div id="box_custom_css_wrapper" class="hidden d-none">
+                                        <textarea name="xd_form[box_custom_css]" id="box_custom_css" class="form-control" rows="5"><?php echo isset($xd_form['box_custom_css']) ? $xd_form['box_custom_css'] : ''; ?></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Block Area End -->
+                            <hr class="divider" />
+                            <!-- Content Area -->
+                            <legend><?php echo $sample_content_area; ?></legend>
+                            <div class="row">
+                                <div class="col-lg-4 col-xs-12">
+                                    <fieldset class="checkbox-switcher justify-content-between">
+                                        <span class="checkbox-switcher-title h6"><?php echo $entry_fullwidth; ?></span>
+                                        <div class="form-check-switcher-wrapper switcher-on-off">
+                                            <span class="custom-checkbox-input-switcher-before"><?php echo $text_disabled; ?></span>
+                                            <div class="form-check form-check-inline form-check-switcher">
+                                                <input type="checkbox" name="xd_form[content_fullwidth]" value="1" id="content_fullwidth" class="custom-checkbox-input-switcher" <?php echo (isset($xd_form['content_fullwidth']) && $xd_form['content_fullwidth'] === '1') ? 'checked="checked"' : '' ?> />
+                                                <label class="custom-checkbox-input-switcher-label" for="content_fullwidth"><?php echo $entry_fullwidth; ?></label>
+                                            </div>
+                                            <span class="custom-checkbox-input-switcher-after"><?php echo $text_enabled; ?></span>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="col-lg-8 col-xs-12">
+                                </div>
+                            </div>
+                            <hr class="inner" />
+                            <div class="row">
+                                <div class="col-lg-4 col-xs-12">
+                                    <fieldset class="checkbox-switcher justify-content-between">
+                                        <span class="checkbox-switcher-title h6"><?php echo $entry_background_color_status; ?></span>
+                                        <div class="form-check-switcher-wrapper switcher-on-off">
+                                            <span class="custom-checkbox-input-switcher-before"><?php echo $text_disabled; ?></span>
+                                            <div class="form-check form-check-inline form-check-switcher">
+                                                <input type="checkbox" name="xd_form[content_bg_color_status]" value="1" id="content_bg_color_status" class="custom-checkbox-input-switcher show-child" <?php echo (isset($xd_form['content_bg_color_status']) && $xd_form['content_bg_color_status'] === '1') ? 'checked="checked"' : '' ?> data-child="content_bg_color_wrapper" />
+                                                <label class="custom-checkbox-input-switcher-label" for="content_bg_color_status"><?php echo $entry_background_color_status; ?></label>
+                                            </div>
+                                            <span class="custom-checkbox-input-switcher-after"><?php echo $text_enabled; ?></span>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="col-lg-8 col-xs-12">
+                                    <div id="content_bg_color_wrapper" class="hidden d-none">
+                                        <div class="form-group form-group_colorfield">
+                                            <div class="input-group form-inline colorfield">
+                                                <span class="input-group-addon"><i style="background:<?php echo isset($xd_form['content_bg_color']) ? $xd_form['content_bg_color'] : '#000000'; ?>"></i></span>
+                                                <input class="form-control" name="xd_form[content_bg_color]" value="<?php echo isset($xd_form['content_bg_color']) ? $xd_form['content_bg_color'] : '#000000'; ?>" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="inner" />
+                            <div class="row">
+                                <div class="col-lg-4 col-xs-12">
+                                    <fieldset class="checkbox-switcher justify-content-between">
+                                        <span class="checkbox-switcher-title h6"><?php echo $entry_custom_css; ?></span>
+                                        <div class="form-check-switcher-wrapper switcher-on-off">
+                                            <span class="custom-checkbox-input-switcher-before"><?php echo $text_disabled; ?></span>
+                                            <div class="form-check form-check-inline form-check-switcher">
+                                                <input type="checkbox" name="xd_form[content_custom_css_status]" value="1" id="content_custom_css_status" class="custom-checkbox-input-switcher show-child" <?php echo (isset($xd_form['content_custom_css_status']) && $xd_form['content_custom_css_status'] === '1') ? 'checked="checked"' : '' ?> data-child="content_custom_css_wrapper" />
+                                                <label class="custom-checkbox-input-switcher-label" for="content_custom_css_status"><?php echo $entry_custom_css; ?></label>
+                                            </div>
+                                            <span class="custom-checkbox-input-switcher-after"><?php echo $text_enabled; ?></span>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="col-lg-8 col-xs-12">
+                                    <div id="content_custom_css_wrapper" class="hidden d-none">
+                                        <textarea name="xd_form[content_custom_css]" id="content_custom_css" class="form-control" rows="5"><?php echo isset($xd_form['content_custom_css']) ? $xd_form['content_custom_css'] : ''; ?></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Content Area End -->
+                            <hr class="divider" />
+                            <!-- Success Modal -->
+                            <legend><?php echo $modal_area; ?></legend>
+                            <div class="row p-0">
                                 <div class="col-lg-6 col-xs-12">
-                                    <label class="control-label" for="modal_style"><?php echo $tab_styles_modal_style; ?></label>
+                                    <label class="control-label inline-control-label m-0" for="modal_style"><?php echo $tab_styles_modal_style; ?></label>
+                                </div>
+                                <div class="col-lg-6 col-xs-12">
                                     <div class="custom-select">
                                         <select name="xd_form[modal_style]" id="modal_style" class="form-control">
                                             <option value="default" <?php echo (isset($xd_form['modal_style']) && $xd_form['modal_style'] === 'default') ? ' selected' : '' ?>><?php echo $tab_styles_modal_style_default; ?></option>
@@ -372,6 +579,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <!-- Success Modal End -->
                         </div>
                     </div>
                 </div>
@@ -522,21 +730,64 @@
                 }
             });
         }
-        $('.color_input input').ColorPicker({
-            onChange: function(hsb, hex, rgb, el) {
-                $(el).val("#" + hex);
-                $(el).parent().find('.fa').css("color", "#" + hex);
-                $('.circle_color').css("background-color", "#" + hex);
-                $('.circle_color').css("border-color", "#" + hex);
-            },
-            onShow: function(colpkr) {
-                $(colpkr).show();
-                return false;
-            },
-            onHide: function(colpkr) {
-                $(colpkr).hide();
-                return false;
+        // $('.color_input input').ColorPicker({
+        //     onChange: function(hsb, hex, rgb, el) {
+        //         $(el).val("#" + hex);
+        //         $(el).parent().find('.fa').css("color", "#" + hex);
+        //         $('.circle_color').css("background-color", "#" + hex);
+        //         $('.circle_color').css("border-color", "#" + hex);
+        //     },
+        //     onShow: function(colpkr) {
+        //         $(colpkr).show();
+        //         return false;
+        //     },
+        //     onHide: function(colpkr) {
+        //         $(colpkr).hide();
+        //         return false;
+        //     }
+        // });
+
+        // Colorpicker 
+        $('.colorfield input').colorpicker({
+            sliders: {
+                saturation: {
+                    maxLeft: 150,
+                    maxTop: 150
+                },
+                hue: {
+                    maxTop: 150
+                },
+                alpha: {
+                    maxTop: 150
+                }
             }
+        }).on('changeColor.colorpicker', function() {
+            console.log('Color changed:', $(this).val());
+            $(this).parent().find('.input-group-addon i').css("background-color", $(this).val());
         });
+        toggleChildElements();
     });
+
+    function toggleChildElements() {
+        console.log('toggleChildElements called');
+        const toggleChildElements = document.querySelectorAll('.show-child');
+        toggleChildElements.forEach(element => {
+            const childId = element.getAttribute('data-child');
+            console.log('with childId:', childId);
+            const childElement = document.getElementById(childId);
+            // console.log('Child element found:', childElement);
+            if (element.checked) {
+                childElement.classList.remove('hidden', 'd-none');
+            } else {
+                childElement.classList.add('hidden', 'd-none');
+            }
+            element.addEventListener('change', function() {
+                if (this.checked) {
+                    childElement.classList.remove('hidden', 'd-none');
+                } else {
+                    childElement.classList.add('hidden', 'd-none');
+                }
+            });
+        });
+    }
 </script>

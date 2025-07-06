@@ -23,6 +23,33 @@ body #content {
     margin-bottom: 15px;
 }
 
+#content hr.divider {
+    margin: 25px -15px;
+    border-color: #e8e8e8;
+}
+
+#content hr.inner {
+    border-color: #eeeeee;
+}
+
+#content legend {
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin-bottom: 25px;
+    font-size: 20px;
+    font-style: italic;
+    line-height: inherit;
+    line-height: 1.75;
+    color: #333;
+    border: 0;
+    border-bottom: 1px dotted #000;
+}
+
+.m-0 {
+    margin: 0 !important;
+}
+
 .mt-0 {
     margin-top: 0 !important;
 }
@@ -45,6 +72,16 @@ body #content {
 
 .mb-15 {
     margin-bottom: 15px !important;
+}
+
+.py-15 {
+    padding-top: 15px !important;
+    padding-bottom: 15px !important;
+}
+
+.px-15 {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
 }
 
 .pt-15 {
@@ -74,7 +111,7 @@ label {
 input.form-control,
 select.form-control {
     border-radius: 6px;
-    padding: 11px 12px;
+    padding: 6px 12px;
     font-size: 15px;
     line-height: 140%;
     height: auto;
@@ -109,6 +146,37 @@ select.form-control {
     border-radius: 6px;
 }
 
+.inline-control-label {
+    padding-top: 13px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #0066cc;
+}
+
+.form-group_colorfield {
+    margin: 0;
+    padding: 0;
+}
+
+.form-group_colorfield .input-group-addon {
+    margin: 0;
+    padding: 0;
+    border: 1px solid;
+}
+
+.form-group_colorfield .input-group-addon>i {
+    width: 33px;
+    height: 33px;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    background-color: transparent;
+    border: 1px solid #ccc;
+}
+
+
+.form-group+.form-group {
+    border: none;
+}
 
 
 .custom-select {
@@ -120,7 +188,7 @@ select.form-control {
     appearance: none;
     width: 100%;
     /* font-size: 1.15rem; */
-    padding: 11px 24px 11px 12px;
+    padding: 6px 24px 6px 12px;
     background-color: #fff;
     /* border: 1px solid #555; */
     /* border-radius: 0.25rem; */
@@ -163,10 +231,21 @@ select.form-control {
     gap: 25px;
 }
 
+.checkbox-switcher.justify-content-start {
+    justify-content: flex-start;
+}
+
+.checkbox-switcher.justify-content-between {
+    justify-content: space-between;
+}
+
+
 .checkbox-switcher .checkbox-switcher-title {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 500;
-    color: #0066cc;
+    /* color: #0066cc; */
+    line-height: 1;
+    margin: 10px 0;
 }
 
 .form-check-switcher-wrapper {
@@ -576,4 +655,140 @@ select.form-control {
         transform: rotate(0deg) scale(0.7) skew(1deg);
         opacity: .2;
     }
+}
+
+
+
+.sample {
+    position: relative;
+    /* border-bottom: 1px solid #e5e5e5;
+    margin-bottom: -15px;
+    padding: 10px; */
+}
+
+.sample-heading {
+    display: inline-block;
+    padding: 6px 0px 2px;
+    font-size: 16px;
+    color: #444444;
+    margin-bottom: 10px;
+}
+
+.sample small {
+    display: inline-block;
+    position: absolute;
+    left: -1px;
+    top: -1px;
+    color: #ffffff;
+    background: #fad177;
+    text-transform: uppercase;
+    font-size: 10px;
+    padding: 4px 6px 5px 6px;
+}
+
+.sample small.browser {
+    color: #444444;
+    background: #ffffff;
+    border: 1px solid #000000;
+}
+
+.sample .page {
+    border: 1px solid #000000;
+    position: relative;
+}
+
+.sample .block {
+    background: #fffbf3;
+    border: 2px solid #fdd681;
+    position: relative;
+    /* height: 200px; */
+    margin: 50px 0px 50px;
+}
+
+.sample .content {
+    border: 1px solid #83ba6a;
+    position: relative;
+    /* height: 200px; */
+    width: 70%;
+    margin: -1px 15%;
+}
+
+.sample .content>small {
+    background: #a3ce90;
+    padding: 4px 5px 5px 6px;
+    right: -1px;
+    bottom: -1px;
+    left: auto;
+    top: auto;
+}
+
+.sample .column {
+    background: #f8e8e8;
+    width: 48%;
+    height: 100%;
+    float: left;
+    position: relative;
+    border-right: 1px solid #e2acac;
+}
+
+.sample .column small {
+    background: #e9b3b3;
+    left: 0;
+    top: 0;
+}
+
+.sample .column.right {
+    float: right;
+    border-right: none;
+    border-left: 1px solid #e2acac;
+}
+
+.sample .form {
+    background: #f0f0f0;
+    border: 1px solid #dcdcdc;
+    position: relative;
+    /* height: 200px; */
+    width: 90%;
+    margin: 25px 5%;
+    padding: 15px;
+}
+
+.sample .form>span {
+    margin: 0 auto;
+    display: block;
+    color: #000000;
+    text-align: center;
+    max-width: 90%;
+}
+
+.sample .form>.form-title {
+    font-size: 16px;
+}
+
+.sample .form>.form-subtitle {
+    font-size: 12px;
+    color: #333333;
+}
+
+.sample .form>.form-bottom {
+    text-align: left;
+    font-size: 10px;
+    color: #333333;
+}
+
+.sample .form>input {
+    height: 12px;
+    background: #cccccc;
+    max-width: 90%;
+    margin: 12px auto 0;
+}
+
+.sample .form>input+input,
+.sample .form>div>button {
+    margin-top: 12px;
+}
+
+.sample .form>div>button {
+    margin: 12px auto 0 auto;
+    padding: 6px;
 }

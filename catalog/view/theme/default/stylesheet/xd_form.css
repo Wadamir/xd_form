@@ -2,11 +2,63 @@
     display: none !important;
 }
 
+#xd_form_module .xd_form_fullwidth {
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    width: calc(100vw - var(--scrollbar-width));
+    max-width: 100vw;
+}
+
+#xd_form_module .xd_content_fullwidth {
+    width: 100%;
+}
+
+
+#xd_form_module #xd_form_title>span {
+    display: block;
+    font-size: 2em;
+    line-height: 1.25em;
+    font-weight: 600;
+    margin-bottom: 0.5em;
+}
+
 #xd_form-submit {
     max-width: 300px;
 
     margin: 0 auto;
 }
+
+#xd_form_module #xd_form_bottom {
+    margin-top: 1.5em;
+}
+
+#xd_form_module .m-0 {
+    margin: 0 !important;
+}
+
+#xd_form_module .mt-1 {
+    margin-top: 1em !important;
+}
+
+#xd_form_module .mb-1 {
+    margin-bottom: 1em !important;
+}
+
+#xd_form_module .p-0 {
+    padding: 0 !important;
+}
+
+#xd_form_module .pt-1 {
+    padding-top: 1em !important;
+}
+
+#xd_form_module .pb-1 {
+    padding-bottom: 1em !important;
+}
+
 
 
 /* Modal styles */

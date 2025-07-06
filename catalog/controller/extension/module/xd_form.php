@@ -42,6 +42,7 @@ class ControllerExtensionModuleXDForm extends Controller
                 $data['form_title'] = (isset($xd_form_setting['form_title'][$current_language_id])) ? $xd_form_setting['form_title'][$current_language_id] : '';
                 $data['form_subtitle'] = (isset($xd_form_setting['form_subtitle'][$current_language_id])) ? html_entity_decode($xd_form_setting['form_subtitle'][$current_language_id], ENT_QUOTES, 'UTF-8') : '';
                 $data['form_submit'] = (isset($xd_form_setting['form_submit'][$current_language_id])) ? $xd_form_setting['form_submit'][$current_language_id] : '';
+                $data['form_bottom'] = (isset($xd_form_setting['form_bottom'][$current_language_id])) ? html_entity_decode($xd_form_setting['form_bottom'][$current_language_id], ENT_QUOTES, 'UTF-8') : '';
 
                 $data['success_field'] = (isset($xd_form_setting['success_field'][$current_language_id])) ? html_entity_decode($xd_form_setting['success_field'][$current_language_id], ENT_QUOTES, 'UTF-8') : $this->language->get('success_field');
 
@@ -95,11 +96,89 @@ class ControllerExtensionModuleXDForm extends Controller
                 $data['success_type'] = (isset($xd_form_setting['success_type'])) ? $xd_form_setting['success_type'] : 0;
                 $data['success_utm'] = (isset($xd_form_setting['success_utm'])) ? 'utm_source=' . trim($xd_form_setting['success_utm']) : 'utm_source=xd_form';
 
+
+
                 // Styles
-                // $data['button_color'] = (isset($xd_form_setting['button_color'])) ? $xd_form_setting['button_color'] : '';
-                // $data['button_position'] = (isset($xd_form_setting['button_position'])) ? $xd_form_setting['button_position'] : 'bottom_left';
-                // $data['modal_style'] = (isset($xd_form_setting['modal_style'])) ? $xd_form_setting['modal_style'] : 'default';
-                $data['modal_style'] = 'default'; // Default style
+                // Box styles
+                $data['box_classes'] = 'xd_form_box';
+                if (isset($xd_form_setting['box_fullwidth']) && $xd_form_setting['box_fullwidth'] === '1') {
+                    $data['box_classes'] .= ' xd_form_fullwidth';
+                }
+                $data['box_styles_inline'] = '';
+                $box_styles = [];
+                $box_bg_color_status = (isset($xd_form_setting['box_bg_color_status']) && $xd_form_setting['box_bg_color_status'] === '1') ? true : false;
+                if ($box_bg_color_status) {
+                    if (isset($xd_form_setting['box_bg_color']) && !empty($xd_form_setting['box_bg_color']) && $xd_form_setting['box_bg_color'] !== '') {
+                        $box_styles[] = 'background-color: ' . $xd_form_setting['box_bg_color'];
+                    }
+                }
+                $box_bg_img_status = (isset($xd_form_setting['box_bg_img_status']) && $xd_form_setting['box_bg_img_status'] === '1') ? true : false;
+                if ($box_bg_img_status) {
+                    // var_dump($xd_form_setting['box_bg_img']);
+                    if (isset($xd_form_setting['box_bg_img']) && !empty($xd_form_setting['box_bg_img']) && $xd_form_setting['box_bg_img'] !== '') {
+                        $box_bg_img = 'image/' . $xd_form_setting['box_bg_img'];
+                        $box_styles[] = 'background-image: url(' . $this->config->get('config_url') . $box_bg_img . ')';
+                    }
+                    if (isset($xd_form_setting['box_bg_img_pos']) && !empty($xd_form_setting['box_bg_img_pos']) && $xd_form_setting['box_bg_img_pos'] !== '') {
+                        $box_styles[] = 'background-position: ' . $xd_form_setting['box_bg_img_pos'];
+                    }
+                    if (isset($xd_form_setting['box_bg_img_size']) && !empty($xd_form_setting['box_bg_img_size']) && $xd_form_setting['box_bg_img_size'] !== '') {
+                        $box_styles[] = 'background-size: ' . $xd_form_setting['box_bg_img_size'];
+                    }
+                    if (isset($xd_form_setting['box_bg_img_repeat']) && !empty($xd_form_setting['box_bg_img_repeat']) && $xd_form_setting['box_bg_img_repeat'] !== '') {
+                        $box_styles[] = 'background-repeat: ' . $xd_form_setting['box_bg_img_repeat'];
+                    }
+                }
+                $box_custom_css_status = (isset($xd_form_setting['box_custom_css_status']) && $xd_form_setting['box_custom_css_status'] === '1') ? true : false;
+                if ($box_custom_css_status) {
+                    if (isset($xd_form_setting['box_custom_css']) && !empty($xd_form_setting['box_custom_css']) && $xd_form_setting['box_custom_css'] !== '') {
+                        $custom_styles_array = explode(';', $xd_form_setting['box_custom_css']);
+                        foreach ($custom_styles_array as $custom_style) {
+                            $custom_style = trim($custom_style);
+                            if (!empty($custom_style)) {
+                                $box_styles[] = $custom_style;
+                            }
+                        }
+                    }
+                }
+                if (!empty($box_styles)) {
+                    $data['box_styles_inline'] = ' style="' . implode('; ', $box_styles) . '"';
+                }
+
+                // Content styles
+                $data['content_classes'] = 'xd_form_content';
+                if (isset($xd_form_setting['content_fullwidth']) && $xd_form_setting['content_fullwidth'] === '1') {
+                    $data['content_classes'] .= ' container-fluid';
+                } else {
+                    $data['content_classes'] .= ' container';
+                }
+                $data['content_styles_inline'] = '';
+                $content_styles = [];
+                $content_bg_color_status = (isset($xd_form_setting['content_bg_color_status']) && $xd_form_setting['content_bg_color_status'] === '1') ? true : false;
+                if ($content_bg_color_status) {
+                    if (isset($xd_form_setting['content_bg_color']) && !empty($xd_form_setting['content_bg_color']) && $xd_form_setting['content_bg_color'] !== '') {
+                        $content_styles[] = 'background-color: ' . $xd_form_setting['content_bg_color'];
+                    }
+                }
+                $content_custom_css_status = (isset($xd_form_setting['content_custom_css_status']) && $xd_form_setting['content_custom_css_status'] === '1') ? true : false;
+                if ($content_custom_css_status) {
+                    if (isset($xd_form_setting['content_custom_css']) && !empty($xd_form_setting['content_custom_css']) && $xd_form_setting['content_custom_css'] !== '') {
+                        $custom_styles_array = explode(';', $xd_form_setting['content_custom_css']);
+                        foreach ($custom_styles_array as $custom_style) {
+                            $custom_style = trim($custom_style);
+                            if (!empty($custom_style)) {
+                                $content_styles[] = $custom_style;
+                            }
+                        }
+                    }
+                }
+                if (!empty($content_styles)) {
+                    $data['content_styles_inline'] = ' style="' . implode('; ', $content_styles) . '"';
+                }
+
+                $data['modal_style'] = (isset($xd_form_setting['modal_style'])) ? $xd_form_setting['modal_style'] : 'default';
+
+
 
                 // SourceBuster Analytics
                 $data['exan_status'] = (isset($xd_form_setting['exan_status'])) ? boolval($xd_form_setting['exan_status']) : false;

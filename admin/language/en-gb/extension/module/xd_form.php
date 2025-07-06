@@ -53,6 +53,7 @@ $_['entry_spam_protection']         = 'Additional spam protection';
 $_['entry_form_title']              = 'Form title';
 $_['entry_form_subtitle']           = 'Form subtitle';
 $_['entry_form_submit']             = 'Form submit button text';
+$_['entry_form_bottom']              = 'Text on form bottom';
 $_['entry_status']                  = 'Enable XD Form module';
 $_['entry_success_field']           = 'Success pop-up window text';
 $_['entry_html_tags']               = 'using HTML tags is allowed';
@@ -73,9 +74,30 @@ $_['tab_styles_button_position_top_left']       = 'Top left';
 $_['tab_styles_button_position_top_right']      = 'Top right';
 $_['tab_styles_button_position_bottom_left']    = 'Bottom left';
 $_['tab_styles_button_position_bottom_right']   = 'Bottom right';
-$_['tab_styles_modal_style']                    = 'Modal window style';
+$_['tab_styles_modal_style']                    = 'Success modal window style';
 $_['tab_styles_modal_style_default']            = 'Default';
 $_['tab_styles_modal_style_custom']             = 'Custom';
+$_['entry_fullwidth']                           = 'Full width';
+$_['entry_background_color_status']             = 'Background color';
+$_['entry_background_image']                    = 'Background image';
+$_['entry_image']                               = 'Image';
+$_['entry_background_position']                 = 'Background position';
+$_['entry_background_size']                     = 'Background size';
+$_['entry_background_repeat']                   = 'Background repeat';
+$_['entry_custom_css']                          = 'Custom CSS styles';
+
+// Sample
+$_['sample_layout_example']                     = 'Layout example';
+$_['sample_browser']                            = 'Browser';
+$_['sample_block_area']                         = 'Block area';
+$_['sample_form']                               = 'Form';
+$_['sample_content_area']                       = 'Content area';
+$_['sample_form_title']                         = 'Form title';
+$_['sample_form_subtitle']                      = 'Form subtitle';
+$_['sample_form_submit']                        = 'Send';
+$_['sample_form_bottom']                        = 'Text on form bottom';
+
+$_['modal_area']                                = 'Success modal window settings';
 
 // Default values
 $_['default_button_name']           = 'Request a call back';
