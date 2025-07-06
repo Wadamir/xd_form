@@ -392,6 +392,15 @@ class ControllerExtensionModuleXDForm extends Controller
             $mail->setText($mail_text);
             $mail_result = $mail->send();
 
+            // Send to additional alert emails
+            $emails = explode(',', $this->config->get('config_alert_email'));
+            foreach ($emails as $email) {
+                if ($email && preg_match($this->config->get('config_mail_regexp'), $email)) {
+                    $mail->setTo($email);
+                    $mail->send();
+                }
+            }
+
             if (!$mail_result) {
                 $json['success'] = 'Success sending';
                 // Success
@@ -405,6 +414,7 @@ class ControllerExtensionModuleXDForm extends Controller
             } else {
                 $json['error'] = 'Error sending';
             }
+
             $this->response->addHeader('Content-Type: application/json');
             $this->response->setOutput(json_encode($json));
         } else {
